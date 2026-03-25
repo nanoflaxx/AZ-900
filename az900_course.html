@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AZ-900 Azure Fundamentals — Complete Interactive Course</title>
+<style>
+:root {
+  --bg:#fff;--bg2:#f5f5f3;--bg3:#eeede8;--txt:#1a1a18;--txt2:#6b6b67;
+  --bdr:rgba(0,0,0,0.12);--bdr2:rgba(0,0,0,0.22);
+  --rmd:8px;--rlg:12px;
+  --acc:#185FA5;--accl:#E6F1FB;--accm:#378ADD;
+  --ok:#3B6D11;--okl:#EAF3DE;
+  --wn:#BA7517;--wnl:#FAEEDA;
+  --er:#A32D2D;--erl:#FCEBEB;
+  --pu:#533AB7;--pul:#EEEDFE;
+  --te:#0F6E56;--tel:#E1F5EE;
+  --or:#993C1D;--orl:#FAECE7;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1c1c1a;--bg2:#252523;--bg3:#2e2e2b;--txt:#f0ede6;--txt2:#9a9991;
+    --bdr:rgba(255,255,255,0.12);--bdr2:rgba(255,255,255,0.22);
+    --acc:#378ADD;--accl:#0c2e4a;--accm:#85B7EB;
+    --ok:#97C459;--okl:#173404;
+    --wn:#EF9F27;--wnl:#412402;
+    --er:#F09595;--erl:#501313;
+    --pu:#AFA9EC;--pul:#26215C;
+    --te:#5DCAA5;--tel:#04342C;
+    --or:#F0997B;--orl:#4A1B0C;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;background:var(--bg3);color:var(--txt);min-height:100vh;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:2rem 1.25rem 4rem}
+/* Header */
+.hdr{display:flex;align-items:center;gap:12px;margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:.5px solid var(--bdr)}
+.hlogo{width:40px;height:40px;background:var(--accl);border-radius:var(--rmd);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.htitle{font-size:18px;font-weight:500;color:var(--txt)}
+.hsub{font-size:13px;color:var(--txt2)}
+/* Progress */
+.prog-bar{height:6px;background:var(--bg2);border-radius:99px;margin-top:1rem;overflow:hidden}
+.prog-fill{height:100%;background:var(--accm);border-radius:99px;transition:width .4s ease}
+.prog-lbl{font-size:13px;color:var(--txt2);margin-top:6px}
+/* Module cards */
+.mod-list{display:flex;flex-direction:column;gap:10px;margin:1.5rem 0}
+.mod-card{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rlg);padding:1rem 1.25rem;cursor:pointer;transition:border-color .15s,box-shadow .15s;display:flex;align-items:center;gap:12px}
+.mod-card:hover{border-color:var(--bdr2);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.mod-card.done{border-left:3px solid var(--ok)}
+.mod-icon{width:40px;height:40px;border-radius:var(--rmd);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.mod-info{flex:1}
+.mod-title{font-size:15px;font-weight:500;color:var(--txt)}
+.mod-meta{font-size:12px;color:var(--txt2);margin-top:2px}
+.mod-badge{font-size:11px;padding:3px 10px;border-radius:99px;font-weight:500;flex-shrink:0}
+.bdg-todo{background:var(--bg2);color:var(--txt2)}
+.bdg-done{background:var(--okl);color:var(--ok)}
+/* Scoreboard */
+.scores{background:var(--bg2);border-radius:var(--rlg);padding:1rem;display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.sc-item{flex:1;min-width:80px;text-align:center}
+.sc-num{font-size:24px;font-weight:500;color:var(--txt)}
+.sc-lbl{font-size:12px;color:var(--txt2);margin-top:2px}
+/* Lesson view */
+.lcard{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rlg);padding:1.5rem;margin-bottom:1rem}
+.ltabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1.25rem}
+.ltab{font-size:13px;padding:5px 14px;border-radius:99px;border:.5px solid var(--bdr2);cursor:pointer;background:transparent;color:var(--txt2);transition:all .15s;font-family:inherit}
+.ltab.on{background:var(--accl);color:var(--acc);border-color:var(--accm)}
+.lpane{display:none}
+.lpane.on{display:block}
+.lpane h3{font-size:16px;font-weight:500;margin-bottom:.75rem;color:var(--txt)}
+.lpane p{font-size:15px;line-height:1.7;color:var(--txt);margin-bottom:1rem}
+/* Callout boxes */
+.box-info{background:var(--accl);border-left:3px solid var(--accm);border-radius:0 var(--rmd) var(--rmd) 0;padding:.75rem 1rem;margin-bottom:1rem;font-size:14px;color:var(--txt);line-height:1.6}
+.box-tip{background:var(--wnl);border-left:3px solid var(--wn);border-radius:0 var(--rmd) var(--rmd) 0;padding:.75rem 1rem;margin-bottom:1rem;font-size:14px;color:var(--txt);line-height:1.6}
+.box-exam{background:var(--okl);border-left:3px solid var(--ok);border-radius:0 var(--rmd) var(--rmd) 0;padding:.75rem 1rem;margin-bottom:1rem;font-size:14px;color:var(--txt);line-height:1.6}
+/* Concept grid */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:1rem}
+.ccard{background:var(--bg2);border-radius:var(--rmd);padding:.875rem}
+.ccard .cl{font-size:12px;font-weight:500;color:var(--txt2);margin-bottom:4px}
+.ccard .cv{font-size:13px;color:var(--txt);line-height:1.5}
+/* Quiz */
+.qtext{font-size:15px;font-weight:500;color:var(--txt);margin-bottom:.875rem;line-height:1.5}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qopt{background:var(--bg);border:.5px solid var(--bdr2);border-radius:var(--rmd);padding:.75rem 1rem;cursor:pointer;font-size:14px;color:var(--txt);text-align:left;transition:all .15s;line-height:1.5;font-family:inherit}
+.qopt:hover:not([disabled]){border-color:var(--accm);background:var(--accl)}
+.qopt.correct{background:var(--okl);border-color:var(--ok);color:var(--ok)}
+.qopt.wrong{background:var(--erl);border-color:var(--er);color:var(--er)}
+.qfb{margin-top:.875rem;padding:.75rem 1rem;border-radius:var(--rmd);font-size:14px;line-height:1.6;display:none}
+.qfb.on{display:block}
+.qfb.correct{background:var(--okl);color:var(--ok)}
+.qfb.wrong{background:var(--erl);color:var(--er)}
+.qnext{margin-top:1rem;display:none}
+.qnext.on{display:flex;gap:8px;flex-wrap:wrap}
+/* Buttons */
+.btn{padding:8px 18px;border-radius:var(--rmd);border:.5px solid var(--bdr2);background:transparent;color:var(--txt);font-size:14px;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn:hover{background:var(--bg2)}
+.btn-p{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn-p:hover{opacity:.9}
+.back-btn{font-size:13px;color:var(--txt2);cursor:pointer;margin-bottom:1rem;display:inline-flex;align-items:center;gap:4px;border:none;background:none;padding:0;font-family:inherit}
+.back-btn:hover{color:var(--txt)}
+/* Complete banner */
+.cbanner{background:var(--okl);border:.5px solid var(--ok);border-radius:var(--rlg);padding:1rem 1.25rem;text-align:center;margin-top:1rem;display:none}
+.cbanner.on{display:block}
+.cbanner p{font-size:15px;font-weight:500;color:var(--ok)}
+.cbanner small{font-size:13px;color:var(--ok);opacity:.8}
+.hidden{display:none!important}
+/* Nav tabs */
+.nav-tabs{display:flex;gap:8px;margin-bottom:2rem;border-bottom:.5px solid var(--bdr);flex-wrap:wrap}
+.nav-tab{padding:10px 16px;font-size:14px;font-weight:500;cursor:pointer;color:var(--txt2);border:none;background:none;border-bottom:2px solid transparent;transition:all .15s}
+.nav-tab.active{color:var(--acc);border-bottom-color:var(--acc)}
+.nav-tab:hover{color:var(--txt)}
+/* Assessment section */
+.assessment-hidden{display:none}
+.assessment-visible{display:block}
+.test-selector{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rlg);padding:2rem;text-align:center;margin-bottom:2rem}
+.test-selector h3{font-size:18px;font-weight:500;margin-bottom:1.5rem;color:var(--txt)}
+.test-options{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem}
+.test-option-btn{padding:12px 24px;border:.5px solid var(--bdr2);border-radius:var(--rlg);background:var(--bg2);color:var(--txt);font-size:15px;font-weight:500;cursor:pointer;transition:all .15s;font-family:inherit}
+.test-option-btn:hover{border-color:var(--accm);background:var(--accl);color:var(--acc)}
+.disclaimer{background:var(--wn) + "11";border-left:3px solid var(--wn);border-radius:0 var(--rmd) var(--rmd) 0;padding:1rem;margin-top:1.5rem;font-size:13px;color:var(--txt);line-height:1.6}
+/* Test view */
+.test-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:.5px solid var(--bdr)}
+.test-progress{text-align:right}
+.test-progress .num{font-size:16px;font-weight:500;color:var(--txt)}
+.test-progress .denom{font-size:14px;color:var(--txt2)}
+.test-question{margin-bottom:2rem}
+.test-q-number{font-size:12px;color:var(--txt2);font-weight:500;margin-bottom:.5rem}
+.test-q-text{font-size:16px;font-weight:500;color:var(--txt);margin-bottom:1.25rem;line-height:1.6}
+.test-options-group{display:flex;flex-direction:column;gap:10px}
+.test-opt{padding:12px 14px;border:.5px solid var(--bdr2);border-radius:var(--rmd);background:var(--bg);cursor:pointer;font-size:14px;color:var(--txt);text-align:left;transition:all .15s;font-family:inherit}
+.test-opt:hover:not([disabled]){border-color:var(--accm);background:var(--accl)}
+.test-opt[disabled]{cursor:not-allowed;opacity:.6}
+.test-opt.selected{border-color:var(--acc);background:var(--accl)}
+.test-opt.correct{background:var(--okl);border-color:var(--ok)}
+.test-opt.wrong{background:var(--erl);border-color:var(--er)}
+/* Results */
+.results-container{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rlg);padding:2rem;text-align:center}
+.results-score{font-size:48px;font-weight:600;color:var(--acc);margin-bottom:.5rem}
+.results-label{font-size:14px;color:var(--txt2);margin-bottom:1.5rem}
+.result-card{background:var(--bg2);border-radius:var(--rmd);padding:1.5rem;margin:1rem 0;display:inline-block;min-width:180px}
+.result-card-num{font-size:32px;font-weight:600;color:var(--txt)}
+.result-card-label{font-size:12px;color:var(--txt2);margin-top:.5rem}
+.probability-score{background:var(--accl);border:.5px solid var(--accm);border-radius:var(--rlg);padding:1.5rem;margin:1.5rem 0;text-align:center}
+.prob-label{font-size:13px;color:var(--txt2);margin-bottom:.5rem}
+.prob-meter{height:12px;background:var(--bg2);border-radius:99px;overflow:hidden;margin:1rem 0}
+.prob-fill{height:100%;background:linear-gradient(90deg,var(--er),var(--wn),var(--ok));transition:width .4s ease}
+.prob-text{font-size:20px;font-weight:600;color:var(--acc);margin-bottom:.5rem}
+.prob-desc{font-size:13px;color:var(--txt);line-height:1.5;margin-top:.75rem}
+.test-button{padding:10px 20px;margin:6px;border:.5px solid var(--bdr2);border-radius:var(--rmd);background:var(--acc);color:#fff;font-size:14px;cursor:pointer;transition:all .15s;font-family:inherit;font-weight:500}
+.test-button:hover{opacity:.9}
+.test-button-secondary{background:transparent;border-color:var(--accm);color:var(--acc)}
+.test-button-secondary:hover{background:var(--accl)}
+/* Links section */
+.resources-list{background:var(--bg2);border-radius:var(--rmd);padding:1.25rem;margin-top:1rem}
+.resources-list h4{font-size:13px;font-weight:500;color:var(--txt2);margin-bottom:.75rem;text-transform:uppercase;letter-spacing:.05em}
+.resource-link{display:block;padding:8px 0;font-size:13px;color:var(--acc);text-decoration:none;border-bottom:.5px solid var(--bdr);word-break:break-word}
+.resource-link:last-child{border:none}
+.resource-link:hover{text-decoration:underline}
+/* Nav footer */
+.lfooter{display:flex;gap:8px;margin-top:1rem;flex-wrap:wrap;align-items:center}
+.lctr{margin-left:auto;font-size:13px;color:var(--txt2)}
+/* Breadcrumb + title */
+.lbc{font-size:12px;color:var(--txt2);margin-bottom:.5rem}
+.lth{font-size:18px;font-weight:500;color:var(--txt);margin-bottom:1rem}
+/* Resources section */
+.resources{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rlg);padding:1.25rem;margin-top:.5rem}
+.resources h4{font-size:14px;font-weight:500;margin-bottom:.75rem;color:var(--txt)}
+.resources a{font-size:13px;color:var(--acc);text-decoration:none;display:block;margin-bottom:6px}
+.resources a:hover{text-decoration:underline}
+/* Illustration wrapper */
+.iw{margin:1rem 0 1.25rem;border-radius:var(--rlg);overflow:hidden;border:.5px solid var(--bdr);background:var(--bg2)}
+.iw svg{display:block;width:100%;height:auto}
+.ic{font-size:12px;color:var(--txt2);text-align:center;padding:6px 0 10px}
+/* Comparison table */
+.ctable{width:100%;border-collapse:collapse;margin-bottom:1rem;font-size:13px}
+.ctable th{background:var(--bg2);padding:8px 10px;text-align:left;font-weight:500;color:var(--txt2);border-bottom:.5px solid var(--bdr2);font-size:12px}
+.ctable td{padding:8px 10px;border-bottom:.5px solid var(--bdr);color:var(--txt);vertical-align:top}
+.ctable tr:last-child td{border-bottom:none}
+.tag{display:inline-block;font-size:10px;padding:2px 7px;border-radius:99px;font-weight:500;margin:1px}
+.tag-blue{background:var(--accl);color:var(--acc)}
+.tag-green{background:var(--okl);color:var(--ok)}
+.tag-warn{background:var(--wnl);color:var(--wn)}
+.tag-pur{background:var(--pul);color:var(--pu)}
+.tag-teal{background:var(--tel);color:var(--te)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hdr">
+    <div class="hlogo">☁️</div>
+    <div>
+      <div class="htitle">AZ-900 — Complete Interactive Course</div>
+      <div class="hsub">Microsoft Azure Fundamentals · 4 modules · 15 lessons · full exam coverage</div>
+    </div>
+  </div>
+
+  <!-- Navigation tabs -->
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="nav-home" onclick="switchView('home')">📚 Learn</button>
+    <button class="nav-tab" id="nav-test" onclick="switchView('test')">🧪 Assessment Test</button>
+  </div>
+
+  <!-- HOME VIEW -->
+  <div id="home">
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:22px;font-weight:500;color:var(--txt)">Your study dashboard</div>
+      <div style="font-size:14px;color:var(--txt2);margin-top:4px">All topics from the official Microsoft AZ-900 study guide — updated Jan 2026</div>
+      <div class="prog-bar"><div class="prog-fill" id="pbar" style="width:0%"></div></div>
+      <div class="prog-lbl" id="plbl">0 of 15 lessons completed</div>
+    </div>
+    <div class="mod-list" id="modlist"></div>
+    <div class="scores">
+      <div class="sc-item"><div class="sc-num" id="s-cor">0</div><div class="sc-lbl">Correct answers</div></div>
+      <div class="sc-item"><div class="sc-num" id="s-att">0</div><div class="sc-lbl">Questions attempted</div></div>
+      <div class="sc-item"><div class="sc-num" id="s-les">0</div><div class="sc-lbl">Lessons done</div></div>
+      <div class="sc-item"><div class="sc-num" id="s-pct">0%</div><div class="sc-lbl">Quiz accuracy</div></div>
+    </div>
+    <div class="resources">
+      <h4>Official Microsoft resources</h4>
+      <a href="https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-900" target="_blank">📄 Official AZ-900 Study Guide (Jan 2026)</a>
+      <a href="https://learn.microsoft.com/en-us/credentials/certifications/exams/az-900/practice/assessment?assessment-type=practice&assessmentId=23" target="_blank">🧪 Free Official Practice Assessment</a>
+      <a href="https://aka.ms/examdemo" target="_blank">🏖️ Exam Sandbox — try the real interface</a>
+      <a href="https://learn.microsoft.com/en-us/credentials/certifications/request-accommodations" target="_blank">♿ Request exam accommodations (extra time etc.)</a>
+    </div>
+  </div>
+
+  <!-- ASSESSMENT TEST VIEW -->
+  <div id="testview" class="hidden">
+    <button class="back-btn" onclick="goHome()">← Back to modules</button>
+    <div class="hdr">
+      <div class="hlogo" style="background:var(--pul);color:var(--pu)">🧪</div>
+      <div>
+        <div class="htitle">Assessment Test</div>
+        <div class="hsub">Evaluate your AZ-900 readiness</div>
+      </div>
+    </div>
+
+    <!-- Test selector (initial view) -->
+    <div id="testselector" class="test-selector">
+      <h3>📝 Select Test Length</h3>
+      <p style="color:var(--txt2);margin-bottom:1.5rem;font-size:14px">Choose how many random questions you'd like to answer from our bank of 200:</p>
+      <div class="test-options">
+        <button class="test-option-btn" onclick="startTest(25)">🎯 25 Questions</button>
+        <button class="test-option-btn" onclick="startTest(50)">📊 50 Questions</button>
+        <button class="test-option-btn" onclick="startTest(70)">🏆 70 Questions</button>
+      </div>
+      <div class="disclaimer">
+        <strong>⚠️ Important Disclaimer:</strong> This practice test is designed to help you prepare for the AZ-900 exam. Achieving a high score on this test does <strong>NOT guarantee</strong> you will pass the official Microsoft AZ-900 exam. The real exam may cover different topics, have different question formats, and require different preparation. Always refer to the official Microsoft exam objectives and practice with Microsoft's official resources.
+      </div>
+      <div style="margin-top:2rem;padding-top:2rem;border-top:.5px solid var(--bdr)">
+        <h4 style="font-size:13px;font-weight:500;margin-bottom:1rem;color:var(--txt2);text-transform:uppercase">📚 Resource Links by Topic</h4>
+        <div id="resourcelinks"></div>
+      </div>
+    </div>
+
+    <!-- Test in progress -->
+    <div id="testprogress" class="hidden">
+      <div class="test-header">
+        <div></div>
+        <div class="test-progress">
+          <div class="num"><span id="curq">1</span> / <span id="totalq">50</span></div>
+          <div class="denom">Questions</div>
+        </div>
+      </div>
+      <div id="testquestions"></div>
+      <div style="display:flex;gap:1rem;margin-top:2rem;justify-content:center;flex-wrap:wrap">
+        <button class="test-button test-button-secondary" id="prevbtn" onclick="prevQ()" style="display:none">← Previous</button>
+        <button class="test-button" id="nextbtn" onclick="nextQ()">Next →</button>
+        <button class="test-button" id="submititbtn" onclick="submitTest()" style="display:none">Submit Test 🚀</button>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="testresults" class="hidden">
+      <div style="text-align:center;margin-bottom:2rem">
+        <div style="font-size:14px;color:var(--txt2);margin-bottom:1rem">Your Score</div>
+        <div class="results-score"><span id="finalcor">0</span>/<span id="finaltot">50</span></div>
+        <div class="results-label"><span id="finalpct">0</span>%</div>
+      </div>
+
+      <div class="probability-score">
+        <div class="prob-label">📈 Exam Readiness Score</div>
+        <div class="prob-text"><span id="probscore">0</span>%</div>
+        <div class="prob-meter"><div class="prob-fill" id="probfill" style="width:0%"></div></div>
+        <div class="prob-desc" id="probdesc">Loading assessment...</div>
+      </div>
+
+      <div style="display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap">
+        <div class="result-card">
+          <div class="result-card-num" id="correctans">0</div>
+          <div class="result-card-label">Correct</div>
+        </div>
+        <div class="result-card">
+          <div class="result-card-num" id="incorrectans">0</div>
+          <div class="result-card-label">Incorrect</div>
+        </div>
+      </div>
+
+      <div style="margin-top:2rem;padding:1.5rem;background:var(--accl);border-radius:var(--rmd);border-left:3px solid var(--accm)">
+        <div style="font-size:14px;font-weight:500;color:var(--acc);margin-bottom:.75rem">💡 Next Steps:</div>
+        <ul style="font-size:13px;color:var(--txt);line-height:1.7;padding-left:1.25rem">
+          <li>Review your incorrect answers and study those topics</li>
+          <li>Use the resource links below to deepen your knowledge</li>
+          <li>Take another test to track your progress</li>
+          <li>Check Microsoft's official AZ-900 exam guide</li>
+        </ul>
+      </div>
+
+      <div style="text-align:center;margin-top:2rem">
+        <button class="test-button" onclick="goHome()" style="background:var(--txt2)">Back to Modules</button>
+        <button class="test-button" onclick="resetTest()">Take Another Test</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div id="lessonview" class="hidden">
+    <button class="back-btn" onclick="goHome()">&#8592; Back to course</button>
+    <div id="larea"></div>
+  </div>
+</div>
+
+<script>
+// ─── ILLUSTRATIONS ────────────────────────────────────────────────────────────
+const IL = {};
+
+IL["1-1"]=`<div class="iw"><svg viewBox="0 0 700 175" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="175" fill="#f0f4f8"/>
+<rect x="10" y="12" width="148" height="150" rx="9" fill="#fff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="84" y="32" text-anchor="middle" font-size="10" fill="#64748b" font-weight="500">YOUR OFFICE</text>
+<rect x="26" y="42" width="48" height="36" rx="4" fill="#dbeafe" stroke="#93c5fd"/><text x="50" y="64" text-anchor="middle" font-size="9" fill="#1e40af">Server rack</text>
+<rect x="84" y="42" width="48" height="36" rx="4" fill="#dbeafe" stroke="#93c5fd"/><text x="108" y="64" text-anchor="middle" font-size="9" fill="#1e40af">Storage unit</text>
+<text x="84" y="100" text-anchor="middle" font-size="10" fill="#374151">You buy it.</text>
+<text x="84" y="114" text-anchor="middle" font-size="10" fill="#374151">You maintain it.</text>
+<text x="84" y="128" text-anchor="middle" font-size="10" fill="#374151">Huge upfront cost.</text>
+<rect x="24" y="140" width="120" height="16" rx="4" fill="#fee2e2"/><text x="84" y="152" text-anchor="middle" font-size="10" fill="#dc2626">Traditional IT ✗</text>
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3z" fill="#94a3b8"/></marker></defs>
+<line x1="168" y1="88" x2="206" y2="88" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<text x="187" y="82" text-anchor="middle" font-size="9" fill="#64748b">→ cloud</text>
+<rect x="216" y="12" width="474" height="150" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="453" y="32" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="500">MICROSOFT AZURE — over 200 services, 60+ regions worldwide</text>
+<rect x="232" y="44" width="92" height="48" rx="6" fill="#fff" stroke="#bfdbfe"/><text x="278" y="67" text-anchor="middle" font-size="22">🖥️</text><text x="278" y="84" text-anchor="middle" font-size="10" fill="#1e3a8a">Compute</text>
+<rect x="334" y="44" width="92" height="48" rx="6" fill="#fff" stroke="#bfdbfe"/><text x="380" y="67" text-anchor="middle" font-size="22">🗄️</text><text x="380" y="84" text-anchor="middle" font-size="10" fill="#1e3a8a">Storage</text>
+<rect x="436" y="44" width="92" height="48" rx="6" fill="#fff" stroke="#bfdbfe"/><text x="482" y="67" text-anchor="middle" font-size="22">🌐</text><text x="482" y="84" text-anchor="middle" font-size="10" fill="#1e3a8a">Networking</text>
+<rect x="538" y="44" width="92" height="48" rx="6" fill="#fff" stroke="#bfdbfe"/><text x="584" y="67" text-anchor="middle" font-size="22">🔐</text><text x="584" y="84" text-anchor="middle" font-size="10" fill="#1e3a8a">Security</text>
+<text x="453" y="114" text-anchor="middle" font-size="10" fill="#374151">Microsoft owns the hardware · you rent services over the internet · pay only for what you use</text>
+<rect x="333" y="128" width="240" height="18" rx="4" fill="#dbeafe"/><text x="453" y="141" text-anchor="middle" font-size="10" fill="#185FA5">Cloud computing ✓</text>
+</svg><div class="ic">Traditional IT (left) vs cloud computing (right) — the fundamental shift</div></div>`;
+
+IL["1-2"]=`<div class="iw"><svg viewBox="0 0 700 170" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="170" fill="#f0f4f8"/>
+<rect x="10" y="12" width="210" height="146" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="115" y="32" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="500">Public cloud</text>
+<text x="50" y="82" text-anchor="middle" font-size="26">🏢</text><text x="115" y="82" text-anchor="middle" font-size="26">🏢</text><text x="180" y="82" text-anchor="middle" font-size="26">🏢</text>
+<text x="115" y="104" text-anchor="middle" font-size="10" fill="#374151">Many customers share</text><text x="115" y="117" text-anchor="middle" font-size="10" fill="#374151">the same platform</text>
+<rect x="45" y="130" width="140" height="18" rx="4" fill="#dbeafe"/><text x="115" y="143" text-anchor="middle" font-size="10" fill="#1e40af">e.g. Standard Azure</text>
+<rect x="245" y="12" width="210" height="146" rx="9" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="350" y="32" text-anchor="middle" font-size="11" fill="#166534" font-weight="500">Private cloud</text>
+<text x="350" y="82" text-anchor="middle" font-size="34">🏛️</text>
+<text x="350" y="110" text-anchor="middle" font-size="10" fill="#374151">One organisation owns</text><text x="350" y="123" text-anchor="middle" font-size="10" fill="#374151">and controls everything</text>
+<rect x="278" y="130" width="144" height="18" rx="4" fill="#dcfce7"/><text x="350" y="143" text-anchor="middle" font-size="10" fill="#166534">e.g. on-prem datacenter</text>
+<rect x="480" y="12" width="210" height="146" rx="9" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="585" y="32" text-anchor="middle" font-size="11" fill="#6d28d9" font-weight="500">Hybrid cloud</text>
+<text x="536" y="82" text-anchor="middle" font-size="26">🏛️</text>
+<line x1="556" y1="72" x2="612" y2="72" stroke="#c4b5fd" stroke-width="2" stroke-dasharray="5,3"/>
+<text x="634" y="82" text-anchor="middle" font-size="26">☁️</text>
+<text x="585" y="106" text-anchor="middle" font-size="10" fill="#374151">On-prem + public cloud</text><text x="585" y="119" text-anchor="middle" font-size="10" fill="#374151">connected together</text>
+<rect x="512" y="130" width="146" height="18" rx="4" fill="#ede9fe"/><text x="585" y="143" text-anchor="middle" font-size="10" fill="#6d28d9">e.g. hospital + Azure</text>
+</svg><div class="ic">Three cloud deployment models — public, private, and hybrid</div></div>`;
+
+IL["1-3"]=`<div class="iw"><svg viewBox="0 0 700 215" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="215" fill="#f0f4f8"/>
+<text x="88" y="18" text-anchor="middle" font-size="10" fill="#64748b" font-weight="500">On-premises</text>
+<text x="252" y="18" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">IaaS</text>
+<text x="416" y="18" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">PaaS</text>
+<text x="580" y="18" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">SaaS</text>
+<text x="2" y="46" font-size="8" fill="#9ca3af">Hardware</text><text x="2" y="70" font-size="8" fill="#9ca3af">Networking</text><text x="2" y="94" font-size="8" fill="#9ca3af">Storage</text><text x="2" y="118" font-size="8" fill="#9ca3af">OS</text><text x="2" y="142" font-size="8" fill="#9ca3af">Runtime</text><text x="2" y="166" font-size="8" fill="#9ca3af">App logic</text><text x="2" y="190" font-size="8" fill="#9ca3af">Data</text>
+<rect x="50" y="26" width="76" height="168" rx="6" fill="#e2e8f0" stroke="#cbd5e1"/><text x="88" y="114" text-anchor="middle" font-size="10" fill="#475569" font-weight="500">You manage</text><text x="88" y="128" text-anchor="middle" font-size="10" fill="#475569">everything</text>
+<rect x="214" y="26" width="76" height="92" rx="6" fill="#dbeafe" stroke="#93c5fd"/><text x="252" y="78" text-anchor="middle" font-size="10" fill="#1e40af">Azure</text>
+<rect x="214" y="118" width="76" height="76" rx="6" fill="#e2e8f0" stroke="#cbd5e1"/><text x="252" y="160" text-anchor="middle" font-size="10" fill="#475569">You</text>
+<rect x="378" y="26" width="76" height="140" rx="6" fill="#dbeafe" stroke="#93c5fd"/><text x="416" y="102" text-anchor="middle" font-size="10" fill="#1e40af">Azure</text>
+<rect x="378" y="166" width="76" height="28" rx="6" fill="#e2e8f0" stroke="#cbd5e1"/><text x="416" y="184" text-anchor="middle" font-size="10" fill="#475569">You</text>
+<rect x="542" y="26" width="76" height="168" rx="6" fill="#dbeafe" stroke="#93c5fd"/><text x="580" y="114" text-anchor="middle" font-size="10" fill="#1e40af">Azure manages</text><text x="580" y="128" text-anchor="middle" font-size="10" fill="#1e40af">everything</text>
+<rect x="200" y="200" width="12" height="9" rx="2" fill="#dbeafe" stroke="#93c5fd"/><text x="216" y="208" font-size="9" fill="#374151">Microsoft manages</text>
+<rect x="360" y="200" width="12" height="9" rx="2" fill="#e2e8f0" stroke="#cbd5e1"/><text x="376" y="208" font-size="9" fill="#374151">You manage</text>
+</svg><div class="ic">Shared responsibility — who manages what across IaaS, PaaS, and SaaS</div></div>`;
+
+IL["1-4"]=`<div class="iw"><svg viewBox="0 0 700 165" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="165" fill="#f0f4f8"/>
+<rect x="10" y="12" width="148" height="140" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="84" y="32" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">High availability</text>
+<text x="84" y="54" text-anchor="middle" font-size="24">⏱️</text>
+<text x="84" y="80" text-anchor="middle" font-size="10" fill="#374151">99.9%+ uptime SLAs</text><text x="84" y="94" text-anchor="middle" font-size="10" fill="#374151">Redundant systems</text><text x="84" y="108" text-anchor="middle" font-size="10" fill="#374151">always running</text>
+<rect x="22" y="136" width="124" height="10" rx="3" fill="#dbeafe"/>
+
+<rect x="178" y="12" width="148" height="140" rx="9" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="252" y="32" text-anchor="middle" font-size="10" fill="#166534" font-weight="500">Scalability</text>
+<text x="252" y="54" text-anchor="middle" font-size="24">📈</text>
+<text x="252" y="80" text-anchor="middle" font-size="10" fill="#374151">Scale up: more CPU/RAM</text><text x="252" y="94" text-anchor="middle" font-size="10" fill="#374151">Scale out: more instances</text><text x="252" y="108" text-anchor="middle" font-size="10" fill="#374151">On demand, instantly</text>
+<rect x="190" y="136" width="124" height="10" rx="3" fill="#dcfce7"/>
+
+<rect x="346" y="12" width="148" height="140" rx="9" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+<text x="420" y="32" text-anchor="middle" font-size="10" fill="#c2410c" font-weight="500">Reliability &amp; Predictability</text>
+<text x="420" y="54" text-anchor="middle" font-size="24">🔄</text>
+<text x="420" y="80" text-anchor="middle" font-size="10" fill="#374151">Consistent performance</text><text x="420" y="94" text-anchor="middle" font-size="10" fill="#374151">even under load</text><text x="420" y="108" text-anchor="middle" font-size="10" fill="#374151">Global redundancy</text>
+<rect x="358" y="136" width="124" height="10" rx="3" fill="#fed7aa"/>
+
+<rect x="514" y="12" width="175" height="140" rx="9" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="601" y="32" text-anchor="middle" font-size="10" fill="#6d28d9" font-weight="500">Security &amp; Manageability</text>
+<text x="601" y="54" text-anchor="middle" font-size="24">🛡️</text>
+<text x="601" y="80" text-anchor="middle" font-size="10" fill="#374151">Built-in security tools</text><text x="601" y="94" text-anchor="middle" font-size="10" fill="#374151">Manage via portal,</text><text x="601" y="108" text-anchor="middle" font-size="10" fill="#374151">CLI, APIs, or templates</text>
+<rect x="526" y="136" width="150" height="10" rx="3" fill="#ede9fe"/>
+</svg><div class="ic">The four key benefits of cloud services — all tested on AZ-900</div></div>`;
+
+IL["2-1"]=`<div class="iw"><svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="190" fill="#f0f4f8"/>
+<rect x="10" y="12" width="170" height="165" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="95" y="30" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">Azure global regions</text>
+<ellipse cx="95" cy="100" rx="68" ry="54" fill="#dbeafe" stroke="#93c5fd"/>
+<circle cx="60" cy="88" r="6" fill="#185FA5"/><text x="60" y="91" text-anchor="middle" font-size="7" fill="#fff">EU</text>
+<circle cx="92" cy="78" r="6" fill="#185FA5"/><text x="92" y="81" text-anchor="middle" font-size="7" fill="#fff">UK</text>
+<circle cx="126" cy="96" r="6" fill="#185FA5"/><text x="126" y="99" text-anchor="middle" font-size="7" fill="#fff">US</text>
+<circle cx="76" cy="118" r="6" fill="#185FA5"/><text x="76" y="121" text-anchor="middle" font-size="7" fill="#fff">AP</text>
+<circle cx="120" cy="120" r="6" fill="#185FA5"/><text x="120" y="123" text-anchor="middle" font-size="7" fill="#fff">AU</text>
+<text x="95" y="162" text-anchor="middle" font-size="9" fill="#374151">60+ regions worldwide</text>
+
+<rect x="196" y="12" width="240" height="165" rx="9" fill="#fff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="316" y="30" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">Availability zones (within a region)</text>
+<rect x="208" y="40" width="62" height="104" rx="6" fill="#dbeafe" stroke="#93c5fd"/>
+<text x="239" y="58" text-anchor="middle" font-size="8" fill="#1e40af" font-weight="500">Zone 1</text>
+<rect x="214" y="64" width="50" height="17" rx="3" fill="#fff" stroke="#bfdbfe"/><text x="239" y="76" text-anchor="middle" font-size="8" fill="#374151">Datacenter</text>
+<rect x="214" y="85" width="50" height="17" rx="3" fill="#fff" stroke="#bfdbfe"/><text x="239" y="97" text-anchor="middle" font-size="8" fill="#374151">Power ✓</text>
+<rect x="214" y="106" width="50" height="17" rx="3" fill="#fff" stroke="#bfdbfe"/><text x="239" y="118" text-anchor="middle" font-size="8" fill="#374151">Network ✓</text>
+<rect x="285" y="40" width="62" height="104" rx="6" fill="#dcfce7" stroke="#86efac"/>
+<text x="316" y="58" text-anchor="middle" font-size="8" fill="#166534" font-weight="500">Zone 2</text>
+<rect x="291" y="64" width="50" height="17" rx="3" fill="#fff" stroke="#86efac"/><text x="316" y="76" text-anchor="middle" font-size="8" fill="#374151">Datacenter</text>
+<rect x="291" y="85" width="50" height="17" rx="3" fill="#fff" stroke="#86efac"/><text x="316" y="97" text-anchor="middle" font-size="8" fill="#374151">Power ✓</text>
+<rect x="291" y="106" width="50" height="17" rx="3" fill="#fff" stroke="#86efac"/><text x="316" y="118" text-anchor="middle" font-size="8" fill="#374151">Network ✓</text>
+<rect x="362" y="40" width="62" height="104" rx="6" fill="#ede9fe" stroke="#c4b5fd"/>
+<text x="393" y="58" text-anchor="middle" font-size="8" fill="#6d28d9" font-weight="500">Zone 3</text>
+<rect x="368" y="64" width="50" height="17" rx="3" fill="#fff" stroke="#c4b5fd"/><text x="393" y="76" text-anchor="middle" font-size="8" fill="#374151">Datacenter</text>
+<rect x="368" y="85" width="50" height="17" rx="3" fill="#fff" stroke="#c4b5fd"/><text x="393" y="97" text-anchor="middle" font-size="8" fill="#374151">Power ✓</text>
+<rect x="368" y="106" width="50" height="17" rx="3" fill="#fff" stroke="#c4b5fd"/><text x="393" y="118" text-anchor="middle" font-size="8" fill="#374151">Network ✓</text>
+<text x="316" y="158" text-anchor="middle" font-size="9" fill="#374151">If Zone 1 fails → Zones 2 &amp; 3 keep running</text>
+<text x="316" y="171" text-anchor="middle" font-size="8" fill="#64748b">Protects against: single datacenter failure</text>
+
+<rect x="452" y="12" width="238" height="165" rx="9" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="571" y="30" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">Region pairs (cross-region DR)</text>
+<rect x="464" y="42" width="88" height="56" rx="6" fill="#eff6ff" stroke="#93c5fd"/>
+<text x="508" y="66" text-anchor="middle" font-size="22">🏙️</text><text x="508" y="86" text-anchor="middle" font-size="9" fill="#1e40af">West Europe</text>
+<line x1="556" y1="70" x2="594" y2="70" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="575" y="65" text-anchor="middle" font-size="8" fill="#64748b">≥300mi</text>
+<rect x="598" y="42" width="80" height="56" rx="6" fill="#f0fdf4" stroke="#86efac"/>
+<text x="638" y="66" text-anchor="middle" font-size="22">🏙️</text><text x="638" y="86" text-anchor="middle" font-size="9" fill="#166534">North EU</text>
+<text x="571" y="114" text-anchor="middle" font-size="9" fill="#374151">Region-wide disaster in West EU?</text>
+<text x="571" y="127" text-anchor="middle" font-size="9" fill="#374151">North Europe takes over automatically</text>
+<text x="571" y="148" text-anchor="middle" font-size="8" fill="#64748b">Protects against: full region disaster</text>
+<text x="571" y="162" text-anchor="middle" font-size="8" fill="#64748b">Different level from availability zones!</text>
+</svg><div class="ic">Regions, availability zones (within a region), and region pairs (cross-region failover)</div></div>`;
+
+IL["2-2"]=`<div class="iw"><svg viewBox="0 0 700 175" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="175" fill="#f0f4f8"/>
+<rect x="10" y="12" width="148" height="148" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="84" y="30" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">Virtual Machines</text>
+<text x="84" y="52" text-anchor="middle" font-size="26">🖥️</text>
+<text x="84" y="78" text-anchor="middle" font-size="10" fill="#374151">Full OS control</text><text x="84" y="92" text-anchor="middle" font-size="10" fill="#374151">You manage patches</text>
+<rect x="22" y="122" width="124" height="16" rx="4" fill="#dbeafe"/><text x="84" y="134" text-anchor="middle" font-size="10" fill="#1e40af">IaaS — max control</text>
+<text x="84" y="154" text-anchor="middle" font-size="9" fill="#64748b">Scale Sets · Virtual Desktop</text>
+
+<rect x="178" y="12" width="148" height="148" rx="9" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="252" y="30" text-anchor="middle" font-size="10" fill="#166534" font-weight="500">App Service</text>
+<text x="252" y="52" text-anchor="middle" font-size="26">🌐</text>
+<text x="252" y="78" text-anchor="middle" font-size="10" fill="#374151">Host web apps &amp; APIs</text><text x="252" y="92" text-anchor="middle" font-size="10" fill="#374151">Azure manages OS</text>
+<rect x="190" y="122" width="124" height="16" rx="4" fill="#dcfce7"/><text x="252" y="134" text-anchor="middle" font-size="10" fill="#166534">PaaS — no server mgmt</text>
+<text x="252" y="154" text-anchor="middle" font-size="9" fill="#64748b">Web · API · Mobile backends</text>
+
+<rect x="346" y="12" width="148" height="148" rx="9" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="420" y="30" text-anchor="middle" font-size="10" fill="#6d28d9" font-weight="500">Containers</text>
+<text x="420" y="52" text-anchor="middle" font-size="26">📦</text>
+<text x="420" y="78" text-anchor="middle" font-size="10" fill="#374151">Package app + deps</text><text x="420" y="92" text-anchor="middle" font-size="10" fill="#374151">Portable, consistent</text>
+<rect x="358" y="122" width="124" height="16" rx="4" fill="#ede9fe"/><text x="420" y="134" text-anchor="middle" font-size="10" fill="#6d28d9">ACI · AKS</text>
+<text x="420" y="154" text-anchor="middle" font-size="9" fill="#64748b">Docker containers in Azure</text>
+
+<rect x="514" y="12" width="176" height="148" rx="9" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+<text x="602" y="30" text-anchor="middle" font-size="10" fill="#c2410c" font-weight="500">Azure Functions</text>
+<text x="602" y="52" text-anchor="middle" font-size="26">⚡</text>
+<text x="602" y="78" text-anchor="middle" font-size="10" fill="#374151">Serverless, event-driven</text><text x="602" y="92" text-anchor="middle" font-size="10" fill="#374151">Pay per execution only</text>
+<rect x="526" y="122" width="152" height="16" rx="4" fill="#fed7aa"/><text x="602" y="134" text-anchor="middle" font-size="10" fill="#c2410c">Serverless — pay per run</text>
+<text x="602" y="154" text-anchor="middle" font-size="9" fill="#64748b">No idle server cost</text>
+
+<line x1="10" y1="168" x2="690" y2="168" stroke="#cbd5e1" stroke-width="1"/>
+<text x="14" y="176" font-size="8" fill="#64748b">← More you manage</text>
+<text x="566" y="176" font-size="8" fill="#64748b">More managed for you →</text>
+</svg><div class="ic">Azure compute options — from VMs (most control) to Functions (most managed)</div></div>`;
+
+IL["2-3"]=`<div class="iw"><svg viewBox="0 0 700 185" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="185" fill="#f0f4f8"/>
+<!-- VNet -->
+<rect x="10" y="12" width="320" height="165" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="6,3"/>
+<text x="170" y="30" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">Azure Virtual Network (VNet) — your private network in Azure</text>
+<!-- Subnet A -->
+<rect x="24" y="40" width="130" height="82" rx="6" fill="#dbeafe" stroke="#93c5fd"/>
+<text x="89" y="58" text-anchor="middle" font-size="9" fill="#1e40af" font-weight="500">Subnet A (10.0.1.0/24)</text>
+<rect x="36" y="66" width="46" height="26" rx="4" fill="#fff" stroke="#93c5fd"/><text x="59" y="83" text-anchor="middle" font-size="8" fill="#374151">VM 1</text>
+<rect x="92" y="66" width="46" height="26" rx="4" fill="#fff" stroke="#93c5fd"/><text x="115" y="83" text-anchor="middle" font-size="8" fill="#374151">VM 2</text>
+<text x="89" y="118" text-anchor="middle" font-size="8" fill="#374151">Web tier</text>
+<!-- Subnet B -->
+<rect x="168" y="40" width="148" height="82" rx="6" fill="#dcfce7" stroke="#86efac"/>
+<text x="242" y="58" text-anchor="middle" font-size="9" fill="#166534" font-weight="500">Subnet B (10.0.2.0/24)</text>
+<rect x="180" y="66" width="50" height="26" rx="4" fill="#fff" stroke="#86efac"/><text x="205" y="83" text-anchor="middle" font-size="8" fill="#374151">DB server</text>
+<rect x="244" y="66" width="60" height="26" rx="4" fill="#fff" stroke="#86efac"/><text x="274" y="79" text-anchor="middle" font-size="8" fill="#374151">App</text><text x="274" y="90" text-anchor="middle" font-size="8" fill="#374151">server</text>
+<text x="242" y="118" text-anchor="middle" font-size="8" fill="#374151">Database tier</text>
+<!-- Peering arrow -->
+<text x="170" y="140" text-anchor="middle" font-size="9" fill="#374151">VNet peering = connect two VNets privately</text>
+
+<!-- Connectivity options -->
+<rect x="346" y="12" width="344" height="165" rx="9" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="518" y="30" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">Connecting Azure to on-premises</text>
+<!-- VPN Gateway -->
+<rect x="358" y="42" width="148" height="56" rx="6" fill="#fff7ed" stroke="#fed7aa"/>
+<text x="432" y="60" text-anchor="middle" font-size="9" fill="#c2410c" font-weight="500">VPN Gateway</text>
+<text x="432" y="74" text-anchor="middle" font-size="9" fill="#374151">Encrypted tunnel</text>
+<text x="432" y="87" text-anchor="middle" font-size="9" fill="#374151">over public internet</text>
+<!-- ExpressRoute -->
+<rect x="520" y="42" width="158" height="56" rx="6" fill="#faf5ff" stroke="#c4b5fd"/>
+<text x="599" y="60" text-anchor="middle" font-size="9" fill="#6d28d9" font-weight="500">ExpressRoute</text>
+<text x="599" y="74" text-anchor="middle" font-size="9" fill="#374151">Private dedicated</text>
+<text x="599" y="87" text-anchor="middle" font-size="9" fill="#374151">connection (faster)</text>
+<!-- DNS + endpoints -->
+<rect x="358" y="110" width="148" height="56" rx="6" fill="#f0fdf4" stroke="#86efac"/>
+<text x="432" y="128" text-anchor="middle" font-size="9" fill="#166534" font-weight="500">Azure DNS</text>
+<text x="432" y="142" text-anchor="middle" font-size="9" fill="#374151">Name resolution</text>
+<text x="432" y="155" text-anchor="middle" font-size="9" fill="#374151">for Azure resources</text>
+<rect x="520" y="110" width="158" height="56" rx="6" fill="#eff6ff" stroke="#93c5fd"/>
+<text x="599" y="128" text-anchor="middle" font-size="9" fill="#1e40af" font-weight="500">Endpoints</text>
+<text x="599" y="142" text-anchor="middle" font-size="9" fill="#374151">Public: internet-facing</text>
+<text x="599" y="155" text-anchor="middle" font-size="9" fill="#374151">Private: VNet only</text>
+</svg><div class="ic">Azure networking — VNets with subnets (left) and connectivity options (right)</div></div>`;
+
+IL["2-4"]=`<div class="iw"><svg viewBox="0 0 700 178" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="178" fill="#f0f4f8"/>
+<!-- Storage types -->
+<text x="350" y="16" text-anchor="middle" font-size="11" fill="#374151" font-weight="500">Azure Storage service types</text>
+<rect x="10" y="26" width="148" height="100" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="84" y="46" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">Blob storage</text>
+<text x="84" y="64" text-anchor="middle" font-size="22">🗂️</text>
+<text x="84" y="88" text-anchor="middle" font-size="9" fill="#374151">Unstructured data</text>
+<text x="84" y="101" text-anchor="middle" font-size="9" fill="#374151">Images, videos, backups</text>
+<text x="84" y="118" text-anchor="middle" font-size="9" fill="#64748b">Most commonly used</text>
+
+<rect x="168" y="26" width="148" height="100" rx="9" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="242" y="46" text-anchor="middle" font-size="10" fill="#166534" font-weight="500">File storage</text>
+<text x="242" y="64" text-anchor="middle" font-size="22">📁</text>
+<text x="242" y="88" text-anchor="middle" font-size="9" fill="#374151">SMB file shares</text>
+<text x="242" y="101" text-anchor="middle" font-size="9" fill="#374151">Replace file servers</text>
+<text x="242" y="118" text-anchor="middle" font-size="9" fill="#64748b">Works like a network drive</text>
+
+<rect x="326" y="26" width="148" height="100" rx="9" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="400" y="46" text-anchor="middle" font-size="10" fill="#6d28d9" font-weight="500">Queue storage</text>
+<text x="400" y="64" text-anchor="middle" font-size="22">📬</text>
+<text x="400" y="88" text-anchor="middle" font-size="9" fill="#374151">Message queuing</text>
+<text x="400" y="101" text-anchor="middle" font-size="9" fill="#374151">App communication</text>
+<text x="400" y="118" text-anchor="middle" font-size="9" fill="#64748b">Up to 64KB per message</text>
+
+<rect x="484" y="26" width="206" height="100" rx="9" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+<text x="587" y="46" text-anchor="middle" font-size="10" fill="#c2410c" font-weight="500">Storage tiers</text>
+<rect x="496" y="54" width="84" height="16" rx="3" fill="#fee2e2" stroke="#f87171"/><text x="538" y="66" text-anchor="middle" font-size="8" fill="#dc2626">Hot — frequent access</text>
+<rect x="496" y="74" width="84" height="16" rx="3" fill="#fef9c3" stroke="#fde047"/><text x="538" y="86" text-anchor="middle" font-size="8" fill="#854d0e">Cool — infrequent (30d)</text>
+<rect x="496" y="94" width="84" height="16" rx="3" fill="#f1f5f9" stroke="#cbd5e1"/><text x="538" y="106" text-anchor="middle" font-size="8" fill="#475569">Cold — rare (90d)</text>
+<rect x="590" y="54" width="84" height="56" rx="3" fill="#e2e8f0" stroke="#94a3b8"/><text x="632" y="78" text-anchor="middle" font-size="8" fill="#374151">Archive</text><text x="632" y="90" text-anchor="middle" font-size="8" fill="#374151">cheapest</text><text x="632" y="102" text-anchor="middle" font-size="8" fill="#374151">slowest</text>
+
+<!-- Redundancy row -->
+<text x="350" y="142" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">Storage redundancy options</text>
+<rect x="10" y="150" width="148" height="22" rx="5" fill="#dbeafe" stroke="#93c5fd"/><text x="84" y="165" text-anchor="middle" font-size="9" fill="#1e40af">LRS — 3 copies, 1 datacenter</text>
+<rect x="168" y="150" width="148" height="22" rx="5" fill="#dcfce7" stroke="#86efac"/><text x="242" y="165" text-anchor="middle" font-size="9" fill="#166534">ZRS — 3 zones in 1 region</text>
+<rect x="326" y="150" width="148" height="22" rx="5" fill="#ede9fe" stroke="#c4b5fd"/><text x="400" y="165" text-anchor="middle" font-size="9" fill="#6d28d9">GRS — LRS + paired region</text>
+<rect x="484" y="150" width="206" height="22" rx="5" fill="#fed7aa" stroke="#f59e0b"/><text x="587" y="165" text-anchor="middle" font-size="9" fill="#c2410c">GZRS — ZRS + paired region (most resilient)</text>
+</svg><div class="ic">Azure Storage types (top row) and redundancy options (bottom row)</div></div>`;
+
+IL["2-5"]=`<div class="iw"><svg viewBox="0 0 700 175" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="175" fill="#f0f4f8"/>
+<rect x="10" y="12" width="155" height="150" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="87" y="32" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">Microsoft Entra ID</text>
+<text x="87" y="54" text-anchor="middle" font-size="24">👤</text>
+<text x="87" y="78" text-anchor="middle" font-size="10" fill="#374151">Cloud identity directory</text>
+<text x="87" y="92" text-anchor="middle" font-size="9" fill="#374151">SSO · MFA · Passwordless</text>
+<text x="87" y="106" text-anchor="middle" font-size="9" fill="#374151">Guest/external identities</text>
+<rect x="25" y="120" width="124" height="16" rx="4" fill="#dbeafe"/><text x="87" y="132" text-anchor="middle" font-size="9" fill="#1e40af">formerly Azure AD</text>
+<text x="87" y="155" text-anchor="middle" font-size="9" fill="#64748b">Auth for M365 + Azure</text>
+
+<rect x="178" y="12" width="165" height="150" rx="9" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="260" y="32" text-anchor="middle" font-size="10" fill="#166534" font-weight="500">Auth methods</text>
+<rect x="190" y="42" width="141" height="16" rx="4" fill="#dcfce7" stroke="#86efac"/><text x="260" y="54" text-anchor="middle" font-size="9" fill="#166534">🔑 Password (basic)</text>
+<rect x="190" y="62" width="141" height="16" rx="4" fill="#dcfce7" stroke="#86efac"/><text x="260" y="74" text-anchor="middle" font-size="9" fill="#166534">📱 MFA — password + phone</text>
+<rect x="190" y="82" width="141" height="16" rx="4" fill="#dcfce7" stroke="#86efac"/><text x="260" y="94" text-anchor="middle" font-size="9" fill="#166534">🔒 Passwordless (most secure)</text>
+<rect x="190" y="102" width="141" height="16" rx="4" fill="#dcfce7" stroke="#86efac"/><text x="260" y="114" text-anchor="middle" font-size="9" fill="#166534">🚪 SSO — one login, all apps</text>
+<text x="260" y="138" text-anchor="middle" font-size="9" fill="#374151">Passwordless uses biometrics</text>
+<text x="260" y="151" text-anchor="middle" font-size="9" fill="#374151">or security keys (no password)</text>
+
+<rect x="356" y="12" width="155" height="150" rx="9" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+<text x="433" y="32" text-anchor="middle" font-size="10" fill="#c2410c" font-weight="500">Conditional Access</text>
+<text x="433" y="54" text-anchor="middle" font-size="24">🚦</text>
+<text x="433" y="78" text-anchor="middle" font-size="9" fill="#374151">If/then access rules</text>
+<text x="433" y="94" text-anchor="middle" font-size="9" fill="#374151">"If user logs in from</text>
+<text x="433" y="107" text-anchor="middle" font-size="9" fill="#374151">unknown country →</text>
+<text x="433" y="120" text-anchor="middle" font-size="9" fill="#374151">require MFA"</text>
+<text x="433" y="140" text-anchor="middle" font-size="9" fill="#374151">Signal-based policy</text>
+<text x="433" y="155" text-anchor="middle" font-size="9" fill="#64748b">Part of Entra ID</text>
+
+<rect x="524" y="12" width="165" height="150" rx="9" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="606" y="32" text-anchor="middle" font-size="10" fill="#6d28d9" font-weight="500">RBAC + Zero Trust</text>
+<rect x="536" y="42" width="141" height="16" rx="4" fill="#dcfce7" stroke="#86efac"/><text x="606" y="54" text-anchor="middle" font-size="9" fill="#166534">Owner — full control</text>
+<rect x="536" y="62" width="141" height="16" rx="4" fill="#fef9c3" stroke="#fde047"/><text x="606" y="74" text-anchor="middle" font-size="9" fill="#854d0e">Contributor — modify, no RBAC</text>
+<rect x="536" y="82" width="141" height="16" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/><text x="606" y="94" text-anchor="middle" font-size="9" fill="#475569">Reader — view only</text>
+<text x="606" y="116" text-anchor="middle" font-size="9" fill="#374151" font-style="italic">"Never trust,</text>
+<text x="606" y="129" text-anchor="middle" font-size="9" fill="#374151" font-style="italic">always verify"</text>
+<text x="606" y="148" text-anchor="middle" font-size="9" fill="#374151">Zero Trust principle</text>
+</svg><div class="ic">Azure identity — Entra ID, authentication methods, Conditional Access, and RBAC</div></div>`;
+
+IL["3-1"]=`<div class="iw"><svg viewBox="0 0 700 175" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="175" fill="#f0f4f8"/>
+<rect x="10" y="12" width="148" height="150" rx="9" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+<text x="84" y="30" text-anchor="middle" font-size="10" fill="#c2410c" font-weight="500">Pricing Calculator</text>
+<text x="84" y="52" text-anchor="middle" font-size="24">🧮</text>
+<text x="84" y="76" text-anchor="middle" font-size="9" fill="#374151">Estimate costs</text><text x="84" y="89" text-anchor="middle" font-size="9" fill="#374151">before deploying</text>
+<rect x="22" y="106" width="124" height="14" rx="3" fill="#fed7aa"/><text x="84" y="117" text-anchor="middle" font-size="8" fill="#c2410c">Plan ahead</text>
+<text x="84" y="145" text-anchor="middle" font-size="8" fill="#64748b">azure.com/pricing/calculator</text>
+
+<rect x="178" y="12" width="148" height="150" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="252" y="30" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">TCO Calculator</text>
+<text x="252" y="52" text-anchor="middle" font-size="24">📊</text>
+<rect x="210" y="65" width="20" height="30" rx="2" fill="#374151"/>
+<rect x="238" y="76" width="20" height="19" rx="2" fill="#185FA5"/>
+<text x="220" y="106" text-anchor="middle" font-size="8" fill="#64748b">On-prem</text><text x="248" y="106" text-anchor="middle" font-size="8" fill="#1e40af">Azure</text>
+<text x="252" y="120" text-anchor="middle" font-size="9" fill="#374151">Compare total costs</text>
+<text x="252" y="145" text-anchor="middle" font-size="8" fill="#64748b">Justify migration ROI</text>
+
+<rect x="346" y="12" width="148" height="150" rx="9" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="420" y="30" text-anchor="middle" font-size="10" fill="#166534" font-weight="500">Cost Management</text>
+<text x="420" y="52" text-anchor="middle" font-size="24">📉</text>
+<text x="420" y="76" text-anchor="middle" font-size="9" fill="#374151">Track actual spend</text><text x="420" y="89" text-anchor="middle" font-size="9" fill="#374151">Set budgets + alerts</text>
+<rect x="358" y="100" width="124" height="14" rx="3" fill="#fef9c3" stroke="#fde047"/><text x="420" y="111" text-anchor="middle" font-size="8" fill="#854d0e">⚠️ Budget alert 80%</text>
+<text x="420" y="145" text-anchor="middle" font-size="8" fill="#64748b">Built into Azure portal</text>
+
+<rect x="514" y="12" width="176" height="150" rx="9" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="602" y="30" text-anchor="middle" font-size="10" fill="#6d28d9" font-weight="500">Resource Tags</text>
+<text x="602" y="52" text-anchor="middle" font-size="24">🏷️</text>
+<rect x="524" y="64" width="156" height="14" rx="4" fill="#ede9fe" stroke="#c4b5fd"/><text x="602" y="75" text-anchor="middle" font-size="8" fill="#6d28d9">Department: Marketing</text>
+<rect x="524" y="82" width="156" height="14" rx="4" fill="#ede9fe" stroke="#c4b5fd"/><text x="602" y="93" text-anchor="middle" font-size="8" fill="#6d28d9">Environment: Production</text>
+<rect x="524" y="100" width="156" height="14" rx="4" fill="#ede9fe" stroke="#c4b5fd"/><text x="602" y="111" text-anchor="middle" font-size="8" fill="#6d28d9">Project: Phoenix</text>
+<text x="602" y="130" text-anchor="middle" font-size="9" fill="#374151">Filter cost reports by team</text>
+<text x="602" y="145" text-anchor="middle" font-size="8" fill="#64748b">Max 50 tags per resource</text>
+</svg><div class="ic">Azure cost management tools — estimate, compare, track, and label</div></div>`;
+
+IL["3-2"]=`<div class="iw"><svg viewBox="0 0 700 188" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="188" fill="#f0f4f8"/>
+<rect x="10" y="12" width="290" height="165" rx="9" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="155" y="30" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">Azure resource hierarchy</text>
+<rect x="95" y="40" width="120" height="24" rx="5" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="155" y="56" text-anchor="middle" font-size="9" fill="#6d28d9">Management group</text>
+<line x1="155" y1="64" x2="155" y2="77" stroke="#9ca3af" stroke-width="1.5"/>
+<rect x="95" y="77" width="120" height="24" rx="5" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="155" y="93" text-anchor="middle" font-size="9" fill="#1e40af">Subscription</text>
+<line x1="155" y1="101" x2="155" y2="114" stroke="#9ca3af" stroke-width="1.5"/>
+<rect x="95" y="114" width="120" height="24" rx="5" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="155" y="130" text-anchor="middle" font-size="9" fill="#166534">Resource group</text>
+<line x1="115" y1="138" x2="75" y2="150" stroke="#9ca3af" stroke-width="1"/>
+<line x1="155" y1="138" x2="155" y2="150" stroke="#9ca3af" stroke-width="1"/>
+<line x1="195" y1="138" x2="235" y2="150" stroke="#9ca3af" stroke-width="1"/>
+<rect x="38" y="150" width="56" height="20" rx="4" fill="#fff7ed" stroke="#fed7aa"/><text x="66" y="164" text-anchor="middle" font-size="8" fill="#c2410c">VM</text>
+<rect x="127" y="150" width="56" height="20" rx="4" fill="#fff7ed" stroke="#fed7aa"/><text x="155" y="164" text-anchor="middle" font-size="8" fill="#c2410c">Storage</text>
+<rect x="212" y="150" width="56" height="20" rx="4" fill="#fff7ed" stroke="#fed7aa"/><text x="240" y="164" text-anchor="middle" font-size="8" fill="#c2410c">SQL DB</text>
+<text x="155" y="183" text-anchor="middle" font-size="8" fill="#64748b">Policies set at top are inherited downward</text>
+
+<rect x="316" y="12" width="374" height="165" rx="9" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="503" y="30" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">Governance tools</text>
+<rect x="328" y="42" width="166" height="54" rx="6" fill="#eff6ff" stroke="#93c5fd"/>
+<text x="411" y="60" text-anchor="middle" font-size="9" fill="#1e40af" font-weight="500">Azure Policy</text>
+<text x="411" y="75" text-anchor="middle" font-size="8" fill="#374151">Enforce rules on resources</text>
+<text x="411" y="88" text-anchor="middle" font-size="8" fill="#64748b">"VMs only in West Europe"</text>
+<rect x="506" y="42" width="172" height="54" rx="6" fill="#fff7ed" stroke="#fed7aa"/>
+<text x="592" y="60" text-anchor="middle" font-size="9" fill="#c2410c" font-weight="500">Resource locks</text>
+<rect x="518" y="68" width="62" height="15" rx="3" fill="#fde68a" stroke="#f59e0b"/><text x="549" y="79" text-anchor="middle" font-size="7" fill="#78350f">ReadOnly 🔒</text>
+<rect x="590" y="68" width="76" height="15" rx="3" fill="#fecaca" stroke="#f87171"/><text x="628" y="79" text-anchor="middle" font-size="7" fill="#7f1d1d">CanNotDelete 🔒</text>
+<rect x="328" y="108" width="166" height="54" rx="6" fill="#f0fdf4" stroke="#86efac"/>
+<text x="411" y="126" text-anchor="middle" font-size="9" fill="#166534" font-weight="500">Microsoft Purview</text>
+<text x="411" y="141" text-anchor="middle" font-size="8" fill="#374151">Data governance &amp; compliance</text>
+<text x="411" y="154" text-anchor="middle" font-size="8" fill="#64748b">Classify and protect data</text>
+<rect x="506" y="108" width="172" height="54" rx="6" fill="#faf5ff" stroke="#c4b5fd"/>
+<text x="592" y="126" text-anchor="middle" font-size="9" fill="#6d28d9" font-weight="500">Management groups</text>
+<text x="592" y="141" text-anchor="middle" font-size="8" fill="#374151">Organise subscriptions</text>
+<text x="592" y="154" text-anchor="middle" font-size="8" fill="#64748b">Apply policy at scale</text>
+</svg><div class="ic">Azure resource hierarchy (left) and the four main governance tools (right)</div></div>`;
+
+IL["3-3"]=`<div class="iw"><svg viewBox="0 0 700 175" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="175" fill="#f0f4f8"/>
+<!-- Portal -->
+<rect x="10" y="12" width="148" height="150" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="84" y="30" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">Azure portal</text>
+<text x="84" y="52" text-anchor="middle" font-size="24">🖥️</text>
+<text x="84" y="76" text-anchor="middle" font-size="9" fill="#374151">GUI-based management</text><text x="84" y="89" text-anchor="middle" font-size="9" fill="#374151">portal.azure.com</text>
+<text x="84" y="103" text-anchor="middle" font-size="9" fill="#374151">No code needed</text>
+<rect x="22" y="120" width="124" height="14" rx="3" fill="#dbeafe"/><text x="84" y="131" text-anchor="middle" font-size="8" fill="#1e40af">Best for beginners</text>
+<text x="84" y="155" text-anchor="middle" font-size="8" fill="#64748b">Visual, point-and-click</text>
+
+<!-- Cloud Shell -->
+<rect x="178" y="12" width="165" height="150" rx="9" fill="#1e1e1e" stroke="#4b5563" stroke-width="1.5"/>
+<text x="260" y="30" text-anchor="middle" font-size="10" fill="#e2e8f0" font-weight="500">Azure Cloud Shell</text>
+<text x="260" y="48" text-anchor="middle" font-size="9" fill="#9ca3af">Browser-based terminal</text>
+<text x="20" y="0" font-size="9" fill="#22c55e"><!-- code lines --></text>
+<rect x="186" y="56" width="149" height="70" rx="4" fill="#111827"/>
+<text x="194" y="74" font-size="9" fill="#22c55e">$ az vm list</text>
+<text x="194" y="90" font-size="9" fill="#60a5fa">PS&gt; Get-AzVM</text>
+<text x="194" y="106" font-size="9" fill="#9ca3af"># CLI or PowerShell</text>
+<text x="194" y="120" font-size="9" fill="#9ca3af"># both available</text>
+<text x="260" y="142" text-anchor="middle" font-size="8" fill="#9ca3af">No local install needed</text>
+<text x="260" y="155" text-anchor="middle" font-size="8" fill="#9ca3af">Built into portal</text>
+
+<!-- CLI vs PS -->
+<rect x="354" y="12" width="166" height="150" rx="9" fill="#fff" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="437" y="30" text-anchor="middle" font-size="10" fill="#374151" font-weight="500">CLI vs PowerShell</text>
+<rect x="366" y="40" width="142" height="50" rx="5" fill="#f0fdf4" stroke="#86efac"/>
+<text x="437" y="58" text-anchor="middle" font-size="9" fill="#166534" font-weight="500">Azure CLI</text>
+<text x="437" y="72" text-anchor="middle" font-size="8" fill="#374151">Cross-platform (any OS)</text>
+<text x="437" y="84" text-anchor="middle" font-size="8" fill="#374151">az [command] syntax</text>
+<rect x="366" y="100" width="142" height="50" rx="5" fill="#eff6ff" stroke="#93c5fd"/>
+<text x="437" y="118" text-anchor="middle" font-size="9" fill="#1e40af" font-weight="500">Azure PowerShell</text>
+<text x="437" y="132" text-anchor="middle" font-size="8" fill="#374151">Windows-native feel</text>
+<text x="437" y="144" text-anchor="middle" font-size="8" fill="#374151">Get-Az / New-Az cmdlets</text>
+<text x="437" y="157" text-anchor="middle" font-size="8" fill="#64748b">Both do the same things</text>
+
+<!-- Azure Arc -->
+<rect x="530" y="12" width="160" height="150" rx="9" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+<text x="610" y="30" text-anchor="middle" font-size="10" fill="#c2410c" font-weight="500">Azure Arc</text>
+<text x="610" y="52" text-anchor="middle" font-size="24">🌍</text>
+<text x="610" y="76" text-anchor="middle" font-size="9" fill="#374151">Extend Azure to</text>
+<text x="610" y="89" text-anchor="middle" font-size="9" fill="#374151">anywhere</text>
+<rect x="542" y="100" width="136" height="14" rx="3" fill="#fef3c7"/><text x="610" y="111" text-anchor="middle" font-size="8" fill="#92400e">On-premises servers</text>
+<rect x="542" y="118" width="136" height="14" rx="3" fill="#fef3c7"/><text x="610" y="129" text-anchor="middle" font-size="8" fill="#92400e">Other clouds (AWS, GCP)</text>
+<text x="610" y="152" text-anchor="middle" font-size="8" fill="#374151">Manage everything from</text>
+<text x="610" y="164" text-anchor="middle" font-size="8" fill="#374151">Azure portal</text>
+</svg><div class="ic">Azure management tools — portal, Cloud Shell, CLI vs PowerShell, and Azure Arc</div></div>`;
+
+IL["3-4"]=`<div class="iw"><svg viewBox="0 0 700 175" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+<rect width="700" height="175" fill="#f0f4f8"/>
+<rect x="10" y="12" width="148" height="150" rx="9" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+<text x="84" y="30" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="500">Azure Monitor</text>
+<text x="84" y="52" text-anchor="middle" font-size="24">📈</text>
+<polyline points="18,100 34,88 50,98 66,80 82,94 98,74 114,86 130,72 146,82" fill="none" stroke="#185FA5" stroke-width="2"/>
+<rect x="18" y="114" width="132" height="14" rx="3" fill="#fee2e2" stroke="#f87171"/><text x="84" y="125" text-anchor="middle" font-size="8" fill="#dc2626">🔔 Alert triggered</text>
+<text x="84" y="146" text-anchor="middle" font-size="9" fill="#374151">Log Analytics</text>
+<text x="84" y="159" text-anchor="middle" font-size="9" fill="#374151">Application Insights</text>
+
+<rect x="178" y="12" width="148" height="150" rx="9" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+<text x="252" y="30" text-anchor="middle" font-size="10" fill="#166534" font-weight="500">Azure Advisor</text>
+<text x="252" y="52" text-anchor="middle" font-size="24">💡</text>
+<rect x="190" y="66" width="124" height="13" rx="3" fill="#dcfce7" stroke="#86efac"/><text x="252" y="76" text-anchor="middle" font-size="8" fill="#166534">✓ Reliability</text>
+<rect x="190" y="83" width="124" height="13" rx="3" fill="#dbeafe" stroke="#93c5fd"/><text x="252" y="93" text-anchor="middle" font-size="8" fill="#1e40af">✓ Security</text>
+<rect x="190" y="100" width="124" height="13" rx="3" fill="#fef9c3" stroke="#fde047"/><text x="252" y="110" text-anchor="middle" font-size="8" fill="#854d0e">✓ Cost</text>
+<rect x="190" y="117" width="124" height="13" rx="3" fill="#faf5ff" stroke="#c4b5fd"/><text x="252" y="127" text-anchor="middle" font-size="8" fill="#6d28d9">✓ Performance</text>
+<rect x="190" y="134" width="124" height="13" rx="3" fill="#fff7ed" stroke="#fed7aa"/><text x="252" y="144" text-anchor="middle" font-size="8" fill="#c2410c">✓ Operational excellence</text>
+<text x="252" y="160" text-anchor="middle" font-size="8" fill="#64748b">Personalised to your setup</text>
+
+<rect x="346" y="12" width="165" height="150" rx="9" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5"/>
+<text x="428" y="30" text-anchor="middle" font-size="10" fill="#c2410c" font-weight="500">Azure Service Health</text>
+<text x="428" y="52" text-anchor="middle" font-size="24">❤️</text>
+<rect x="358" y="64" width="141" height="14" rx="3" fill="#dcfce7" stroke="#86efac"/><text x="428" y="75" text-anchor="middle" font-size="8" fill="#166534">✅ West Europe — healthy</text>
+<rect x="358" y="82" width="141" height="14" rx="3" fill="#fee2e2" stroke="#f87171"/><text x="428" y="93" text-anchor="middle" font-size="8" fill="#dc2626">⚠️ East US — incident</text>
+<rect x="358" y="100" width="141" height="14" rx="3" fill="#fef9c3" stroke="#fde047"/><text x="428" y="111" text-anchor="middle" font-size="8" fill="#854d0e">🔧 North EU — maintenance</text>
+<text x="428" y="134" text-anchor="middle" font-size="9" fill="#374151">Outage alerts for</text>
+<text x="428" y="147" text-anchor="middle" font-size="9" fill="#374151">your specific regions</text>
+<text x="428" y="160" text-anchor="middle" font-size="8" fill="#64748b">Personalised to you</text>
+
+<rect x="522" y="12" width="168" height="150" rx="9" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="606" y="30" text-anchor="middle" font-size="10" fill="#6d28d9" font-weight="500">ARM Templates / IaC</text>
+<text x="606" y="52" text-anchor="middle" font-size="24">📄</text>
+<rect x="532" y="62" width="148" height="8" rx="2" fill="#e2e8f0"/>
+<rect x="532" y="74" width="110" height="8" rx="2" fill="#ede9fe"/>
+<rect x="532" y="86" width="130" height="8" rx="2" fill="#e2e8f0"/>
+<rect x="532" y="98" width="90"  height="8" rx="2" fill="#ede9fe"/>
+<rect x="532" y="110" width="120" height="8" rx="2" fill="#e2e8f0"/>
+<text x="606" y="136" text-anchor="middle" font-size="9" fill="#374151">Infrastructure as Code</text>
+<text x="606" y="149" text-anchor="middle" font-size="9" fill="#374151">Deploy consistently</text>
+<text x="606" y="162" text-anchor="middle" font-size="8" fill="#64748b">JSON template files</text>
+</svg><div class="ic">Azure monitoring and management tools — Monitor, Advisor, Service Health, ARM Templates</div></div>`;
+
+// ─── COURSE DATA ──────────────────────────────────────────────────────────────
+const MODULES = [
+{
+  id:0,icon:"☁️",color:"#dbeafe",
+  title:"Cloud concepts",
+  meta:"4 lessons · 25–30% of exam",
+  lessons:[
+    {
+      id:"1-1",title:"What is cloud computing?",
+      learn:`<h3>What is cloud computing?</h3>
+        <p>Cloud computing means delivering IT services — servers, storage, databases, networking, software — over the internet. Instead of buying and maintaining physical hardware, you rent resources from Microsoft Azure and pay only for what you use.</p>
+        ${IL["1-1"]}
+        <div class="box-info"><strong>Key idea:</strong> You don't own the hardware. You access computing power on demand, from anywhere, via the internet. Microsoft owns and maintains the physical infrastructure.</div>
+        <p>The <strong>shared responsibility model</strong> matters for the exam. Microsoft always handles physical security, hardware, and the global network. What you're responsible for depends on the service type you choose (IaaS, PaaS, or SaaS).</p>
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">On-demand</div><div class="cv">Resources available instantly — no waiting to procure hardware</div></div>
+          <div class="ccard"><div class="cl">Pay-as-you-go</div><div class="cv">Only pay for what you actually use, like a utility bill</div></div>
+          <div class="ccard"><div class="cl">Scalable</div><div class="cv">Grow or shrink resources instantly based on demand</div></div>
+          <div class="ccard"><div class="cl">Global reach</div><div class="cv">Azure has 60+ regions — deploy close to your users worldwide</div></div>
+        </div>`,
+      analogy:`<div class="al">Apartment vs house</div>
+        <div class="ab">Renting an apartment vs buying a house. You don't own the building or maintain the plumbing — that's the landlord's (Microsoft's) job. You just use the space, pay monthly, and can upgrade to a bigger flat whenever you need more room. Move out when you don't need it anymore — no sunk cost.</div>
+        <div class="al">Electricity analogy</div>
+        <div class="ab">Before power grids, factories built their own generators. Now they just plug in and pay for what they use. Cloud computing did the same thing for IT — you just "plug in" instead of building your own data center.</div>`,
+      quiz:{q:"A company wants to avoid the large upfront cost of purchasing servers. Which cloud characteristic best describes the model they would use?",opts:["High availability","Consumption-based (pay-as-you-go) pricing","Geographic distribution","Disaster recovery"],answer:1,fbc:"✅ Correct! The consumption-based model means no capital expenditure on hardware — you pay operational costs based on actual usage only.",fbw:"❌ Not quite. The consumption-based (pay-as-you-go) model is the answer — you trade large upfront hardware costs for ongoing costs based on actual usage."}
+    },
+    {
+      id:"1-2",title:"Cloud deployment models",
+      learn:`<h3>Public, private, and hybrid cloud</h3>
+        <p>There are three ways to deploy cloud infrastructure. The exam will test your ability to pick the right model for a given scenario.</p>
+        ${IL["1-2"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Public cloud</div><div class="cv">Owned by a provider (Azure), shared infrastructure, accessed over the internet. Lowest cost, highest scale.</div></div>
+          <div class="ccard"><div class="cl">Private cloud</div><div class="cv">Used exclusively by one organisation. On-premises or hosted. More control, more cost.</div></div>
+          <div class="ccard"><div class="cl">Hybrid cloud</div><div class="cv">Combines public and private. Good for organisations with legacy systems or strict data regulations.</div></div>
+          <div class="ccard"><div class="cl">Multi-cloud</div><div class="cv">Using more than one public cloud provider (e.g. Azure + AWS). Mentioned in AZ-900 but less tested.</div></div>
+        </div>
+        <div class="box-exam"><strong>🎯 Classic exam scenario:</strong> "A hospital must keep patient records on-premises due to regulations but uses Azure for everything else." Answer = hybrid cloud.</div>`,
+      analogy:`<div class="al">Office space analogy</div>
+        <div class="ab"><strong>Public cloud</strong> = Co-working space (WeWork). You share the building, it's affordable, scale your desk count up/down easily.<br><br><strong>Private cloud</strong> = Your own dedicated office. More control and privacy, but you pay rent whether you're there or not.<br><br><strong>Hybrid cloud</strong> = Your own office for sensitive meetings, plus renting extra desks at the co-working space when things get busy. Best of both worlds.</div>`,
+      quiz:{q:"A financial services firm must keep trading data on its own servers but wants to use Azure for its customer-facing website. What deployment model is this?",opts:["Public cloud","Private cloud","Hybrid cloud","Multi-cloud"],answer:2,fbc:"✅ Correct! Hybrid cloud combines on-premises (private) infrastructure with a public cloud provider — perfect for regulated industries.",fbw:"❌ Not quite. Using both on-premises servers AND a public cloud together = hybrid cloud model. The key word is 'both'."}
+    },
+    {
+      id:"1-3",title:"IaaS, PaaS, and SaaS",
+      learn:`<h3>Cloud service types</h3>
+        <p>These three models define how much the cloud provider manages versus how much you manage. One of the most-tested AZ-900 topics.</p>
+        ${IL["1-3"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">IaaS</div><div class="cv">You manage OS, apps, and data. Azure manages hardware. Example: Azure Virtual Machines.</div></div>
+          <div class="ccard"><div class="cl">PaaS</div><div class="cv">You manage apps and data only. Azure manages OS, runtime, servers. Example: Azure App Service, Azure SQL.</div></div>
+          <div class="ccard"><div class="cl">SaaS</div><div class="cv">You just use the software. Everything managed by provider. Example: Microsoft 365, Teams, Outlook.</div></div>
+        </div>
+        <div class="box-tip"><strong>Memory tip:</strong> IaaS → PaaS → SaaS = progressively less for you to manage. SaaS = maximum convenience. IaaS = maximum control.</div>
+        <div class="box-info"><strong>Shared responsibility reminder:</strong> In IaaS you patch the OS. In PaaS Azure does. In SaaS Azure manages everything — you just manage users and data.</div>`,
+      analogy:`<div class="al">The pizza analogy — classic and it sticks</div>
+        <div class="ab"><strong>On-premises</strong> = Make pizza from scratch. You buy ingredients, own the oven, do everything.<br><br><strong>IaaS</strong> = Pizza kit delivery. They deliver dough and toppings — you still bake it yourself.<br><br><strong>PaaS</strong> = Restaurant order. They cook it, you just add your toppings.<br><br><strong>SaaS</strong> = Dining in. You sit down and eat. Everything is handled for you.</div>`,
+      quiz:{q:"A developer wants to deploy a web application without managing the underlying operating system or server infrastructure. Which service type is most appropriate?",opts:["IaaS","PaaS","SaaS","On-premises"],answer:1,fbc:"✅ Correct! PaaS lets developers focus on application code without worrying about OS patching or server management.",fbw:"❌ Not quite. PaaS is the answer — it abstracts away OS and server management so devs focus purely on their application."}
+    },
+    {
+      id:"1-4",title:"Benefits of cloud services",
+      learn:`<h3>Why use the cloud? The key benefits</h3>
+        <p>The study guide has a dedicated section on cloud benefits — these are regularly tested. You need to be able to match a benefit to a scenario.</p>
+        ${IL["1-4"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">High availability</div><div class="cv">Services stay running even when components fail. Azure SLAs guarantee 99.9%+ uptime for most services.</div></div>
+          <div class="ccard"><div class="cl">Scalability</div><div class="cv">Scale up (more CPU/RAM on one machine) or scale out (more machines). Both happen on demand.</div></div>
+          <div class="ccard"><div class="cl">Reliability</div><div class="cv">Distributed design means one failure doesn't take down the whole system. Resources in multiple regions.</div></div>
+          <div class="ccard"><div class="cl">Predictability</div><div class="cv">Consistent performance and cost. Azure autoscales to maintain performance; pricing is transparent.</div></div>
+          <div class="ccard"><div class="cl">Security</div><div class="cv">Built-in tools for identity, encryption, DDoS protection, and threat detection at cloud scale.</div></div>
+          <div class="ccard"><div class="cl">Manageability</div><div class="cv">Manage through portal, CLI, API, or ARM templates. Deploy resources in minutes, monitor automatically.</div></div>
+        </div>
+        <div class="box-exam"><strong>🎯 Exam tip:</strong> Know the difference between <em>reliability</em> (it keeps working after a failure) and <em>high availability</em> (it was never unavailable in the first place). Both matter but mean different things.</div>`,
+      analogy:`<div class="al">Analogy</div>
+        <div class="ab"><strong>High availability</strong> = A motorway with 6 lanes. Even if one lane is blocked, traffic keeps moving — no full stop.<br><br><strong>Scalability</strong> = A hotel that can instantly add more rooms (or floors!) when a conference books out the city.<br><br><strong>Reliability</strong> = A power grid with backup generators. One plant goes down, others pick up the load — you never notice.<br><br><strong>Predictability</strong> = A flat-rate electricity bill that stays consistent month to month, not surprise spikes.</div>`,
+      quiz:{q:"A company's website experiences sudden traffic spikes during sale events. Which cloud benefit allows Azure to automatically add more resources to handle the increased load?",opts:["High availability","Scalability","Predictability","Governance"],answer:1,fbc:"✅ Correct! Scalability means you can add more resources (scale out) or more powerful resources (scale up) on demand to handle increased load.",fbw:"❌ Not quite. Scalability is the answer — specifically 'scaling out' by adding more instances automatically to handle the traffic spike."}
+    }
+  ]
+},
+{
+  id:1,icon:"🏗️",color:"#dcfce7",
+  title:"Azure architecture & services",
+  meta:"5 lessons · 35–40% of exam",
+  lessons:[
+    {
+      id:"2-1",title:"Regions, availability zones, and hierarchy",
+      learn:`<h3>Azure global infrastructure</h3>
+        <p>Azure runs in datacenters worldwide, organised into a clear hierarchy. Understanding this is key for the exam.</p>
+        ${IL["2-1"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Region</div><div class="cv">A geographic area with one or more datacenters. You choose a region when creating resources. Examples: Sweden Central, North Europe.</div></div>
+          <div class="ccard"><div class="cl">Availability zones</div><div class="cv">Physically separate datacenters within one region. Each has independent power, cooling, and networking. Protects against datacenter failure.</div></div>
+          <div class="ccard"><div class="cl">Region pairs</div><div class="cv">Each region is paired with another at least 300 miles away for disaster recovery. If one region has a major outage, the paired region takes over.</div></div>
+          <div class="ccard"><div class="cl">Sovereign regions</div><div class="cv">Isolated regions for specific governments — e.g. Azure Government (US DoD/federal). Completely separate from the main Azure cloud.</div></div>
+        </div>
+        <div class="box-info"><strong>Hierarchy:</strong> Management Groups → Subscriptions → Resource Groups → Resources. Policies set at a higher level are inherited downward by everything below.</div>
+        <div class="box-exam"><strong>🎯 Key distinction:</strong> Availability zones = protection within a region (one datacenter fails). Region pairs = protection across regions (whole region goes down). These are tested separately.</div>`,
+      analogy:`<div class="al">City analogy</div>
+        <div class="ab"><strong>Region</strong> = A city (Stockholm).<br><strong>Availability Zone</strong> = A different building in the city — if one loses power, the others keep working.<br><strong>Region pair</strong> = A sister city (Copenhagen) — if Stockholm has a major disaster, Copenhagen takes over all services.<br><strong>Management group</strong> = The national government — rules set at the top apply to all cities below.</div>`,
+      quiz:{q:"A company deploys an Azure application across three availability zones within the West Europe region. What failure scenario does this protect against?",opts:["A complete region-wide outage","A single datacenter going offline","An Azure global outage","An on-premises connection failure"],answer:1,fbc:"✅ Correct! Availability zones protect against a single datacenter failing. Each zone is a separate physical building with its own power and networking.",fbw:"❌ Not quite. Availability zones protect against single datacenter failures (not full region outages — for that you'd use region pairs)."}
+    },
+    {
+      id:"2-2",title:"Azure compute services",
+      learn:`<h3>Running applications in Azure</h3>
+        <p>Compute = the power to run applications. Azure has several options depending on how much control you need.</p>
+        ${IL["2-2"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Virtual Machines</div><div class="cv">Full OS control. You manage patches and configuration. IaaS. VM Scale Sets auto-add/remove VMs based on demand.</div></div>
+          <div class="ccard"><div class="cl">Azure Virtual Desktop</div><div class="cv">Full Windows desktop experience in the cloud. Access from any device. Good for remote workers.</div></div>
+          <div class="ccard"><div class="cl">App Service</div><div class="cv">Host web apps and APIs without managing servers. PaaS — Azure handles OS, runtime, and patching.</div></div>
+          <div class="ccard"><div class="cl">Containers (ACI/AKS)</div><div class="cv">Package app and dependencies together. Portable and consistent. ACI = simple, AKS = full orchestration.</div></div>
+          <div class="ccard"><div class="cl">Azure Functions</div><div class="cv">Serverless — event-triggered code. Pay only per execution. No idle cost. Max convenience.</div></div>
+        </div>
+        <div class="box-tip"><strong>Serverless ≠ no servers.</strong> It means Azure manages the servers invisibly. You just write code and define triggers. Azure Functions is the primary serverless example for AZ-900.</div>`,
+      analogy:`<div class="al">Transport analogy</div>
+        <div class="ab"><strong>Virtual Machines</strong> = Renting a car. You drive, fill the tank, arrange servicing.<br><br><strong>App Service</strong> = Hiring a chauffeur. You say where to go, they handle all the driving.<br><br><strong>Azure Functions</strong> = Taking a taxi. You only pay per trip. No car sitting idle between uses.</div>`,
+      quiz:{q:"A developer wants to run a small function that fires when a file is uploaded to Azure Storage. She only wants to pay for the seconds the code actually runs. What should she use?",opts:["Azure Virtual Machines","Azure App Service","Azure Functions","Azure Kubernetes Service"],answer:2,fbc:"✅ Correct! Azure Functions is serverless — triggered by events (like a file upload), runs briefly, and you only pay for actual execution time.",fbw:"❌ Not quite. Azure Functions (serverless) is ideal here — event-triggered, runs briefly, and only costs for actual execution milliseconds."}
+    },
+    {
+      id:"2-3",title:"Azure networking",
+      learn:`<h3>Networking in Azure</h3>
+        <p>Networking is one of the most-tested topics in Module 2. You need to know what each service does and when to use it.</p>
+        ${IL["2-3"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Virtual Network (VNet)</div><div class="cv">Your private network in Azure. Resources in a VNet can communicate securely with each other, the internet, and on-premises networks.</div></div>
+          <div class="ccard"><div class="cl">Subnets</div><div class="cv">Divide a VNet into smaller segments. Helps organise and isolate resources — e.g. web tier in Subnet A, database tier in Subnet B.</div></div>
+          <div class="ccard"><div class="cl">VNet Peering</div><div class="cv">Connect two VNets privately so resources in each can communicate directly — without going over the public internet.</div></div>
+          <div class="ccard"><div class="cl">VPN Gateway</div><div class="cv">Encrypted tunnel between Azure and your on-premises network over the public internet. More affordable but slower.</div></div>
+          <div class="ccard"><div class="cl">ExpressRoute</div><div class="cv">Private, dedicated connection between on-premises and Azure — NOT over the internet. Faster, more reliable, more expensive.</div></div>
+          <div class="ccard"><div class="cl">Azure DNS</div><div class="cv">Name resolution for Azure resources and custom domains. Translates domain names to IP addresses.</div></div>
+        </div>
+        <div class="box-exam"><strong>🎯 Key exam distinction:</strong> VPN Gateway = internet-based encrypted tunnel. ExpressRoute = private dedicated line that never touches the public internet. ExpressRoute is faster and more secure but significantly more expensive.</div>
+        <div class="box-info"><strong>Public endpoints</strong> — accessible from the internet via a public IP. <strong>Private endpoints</strong> — accessible only within your VNet, no internet exposure. Private endpoints are more secure.</div>`,
+      analogy:`<div class="al">Networking analogy</div>
+        <div class="ab"><strong>VNet</strong> = Your company's private office building. Internal rooms can talk to each other, but outsiders can't walk in.<br><br><strong>VPN Gateway</strong> = A secure phone call over a public phone network. Encrypted, but still using shared infrastructure.<br><br><strong>ExpressRoute</strong> = A private leased line directly into your building — your own dedicated cable, no shared public network involved. Much faster and more secure.</div>`,
+      quiz:{q:"A company needs a private, high-speed connection between its on-premises datacenter and Azure that does NOT go over the public internet. Which service should they use?",opts:["Azure VPN Gateway","ExpressRoute","VNet Peering","Azure DNS"],answer:1,fbc:"✅ Correct! ExpressRoute provides a private, dedicated connection between on-premises and Azure that bypasses the public internet entirely.",fbw:"❌ Not quite. ExpressRoute is the answer — it's a private dedicated line, unlike VPN Gateway which routes encrypted traffic over the public internet."}
+    },
+    {
+      id:"2-4",title:"Azure Storage services",
+      learn:`<h3>Storage in Azure</h3>
+        <p>Azure has multiple storage types for different use cases, plus important options for redundancy and migration.</p>
+        ${IL["2-4"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Blob storage</div><div class="cv">Object storage for unstructured data — images, videos, documents, backups. Most commonly used storage type.</div></div>
+          <div class="ccard"><div class="cl">File storage</div><div class="cv">Managed file shares using SMB/NFS protocol. Works like a network drive — mount it on Windows, Linux, or macOS.</div></div>
+          <div class="ccard"><div class="cl">Queue storage</div><div class="cv">Message queuing between application components. Each message up to 64KB. Decouples services from each other.</div></div>
+          <div class="ccard"><div class="cl">Table storage</div><div class="cv">NoSQL key-value storage for structured, non-relational data. Fast and cheap for simple lookups.</div></div>
+          <div class="ccard"><div class="cl">Disk storage</div><div class="cv">Managed disks for Azure VMs. Like a virtual hard drive attached to a virtual machine.</div></div>
+        </div>
+        <div class="box-info"><strong>Storage tiers (Blob only):</strong> Hot = frequently accessed data (highest cost). Cool = infrequent access, stored 30+ days. Cold = rare access, stored 90+ days. Archive = long-term archival, cheapest but slowest to retrieve.</div>
+        <table class="ctable"><thead><tr><th>Redundancy</th><th>Copies</th><th>Where</th><th>Protects against</th></tr></thead><tbody>
+        <tr><td><span class="tag tag-blue">LRS</span></td><td>3</td><td>1 datacenter</td><td>Disk/rack failure</td></tr>
+        <tr><td><span class="tag tag-teal">ZRS</span></td><td>3</td><td>3 zones in 1 region</td><td>Zone/datacenter failure</td></tr>
+        <tr><td><span class="tag tag-pur">GRS</span></td><td>6</td><td>LRS + 1 paired region</td><td>Regional outage</td></tr>
+        <tr><td><span class="tag tag-warn">GZRS</span></td><td>6</td><td>ZRS + 1 paired region</td><td>Zone + regional failure</td></tr>
+        </tbody></table>
+        <div class="box-tip"><strong>File migration tools:</strong> AzCopy = command-line tool for copying data to/from Azure Storage. Azure Storage Explorer = GUI app. Azure File Sync = sync on-premises file servers to Azure Files.<br><strong>Migration services:</strong> Azure Migrate = assess and migrate on-premises workloads. Azure Data Box = physical device Microsoft ships to you for bulk offline data transfer (used when internet is too slow).</div>`,
+      analogy:`<div class="al">Storage analogy</div>
+        <div class="ab"><strong>Blob</strong> = A warehouse for boxes — anything can go in, any size, any shape. Unstructured.<br><br><strong>File share</strong> = A network drive — folders and files, just like on your laptop, but in the cloud.<br><br><strong>Queue</strong> = A post box — one service drops a message in, another picks it up later. They never need to talk directly.<br><br><strong>Archive tier</strong> = Off-site tape backup in a vault. Very cheap to store, but takes hours to retrieve. Fine for data you hope never to need.</div>`,
+      quiz:{q:"A company stores security camera footage that must be kept for 7 years but will almost never be accessed. Which Azure Storage tier minimises cost?",opts:["Hot tier","Cool tier","Cold tier","Archive tier"],answer:3,fbc:"✅ Correct! Archive tier is the cheapest storage option — designed for data that is rarely or never accessed and can tolerate retrieval delays of hours.",fbw:"❌ Not quite. Archive tier is the answer — it's the cheapest Blob storage tier, designed for long-term retention of data that is almost never accessed."}
+    },
+    {
+      id:"2-5",title:"Azure identity and security",
+      learn:`<h3>Identity, access, and security</h3>
+        <p>The identity section was updated in the January 2026 exam revision. These concepts are heavily tested.</p>
+        ${IL["2-5"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Microsoft Entra ID</div><div class="cv">Azure's cloud identity service (formerly Azure AD). Manages users, groups, and app access. Enables SSO across all Microsoft services.</div></div>
+          <div class="ccard"><div class="cl">Entra Domain Services</div><div class="cv">Managed domain services (like traditional Active Directory) in the cloud — without needing to run domain controllers yourself.</div></div>
+          <div class="ccard"><div class="cl">External identities</div><div class="cv">Allow people outside your organisation (partners, customers) to sign in using their own credentials (Google, Facebook, etc.).</div></div>
+          <div class="ccard"><div class="cl">Conditional Access</div><div class="cv">If/then access policies — "if user is from unknown location, require MFA." Signal-based, automatic enforcement.</div></div>
+          <div class="ccard"><div class="cl">RBAC</div><div class="cv">Role-Based Access Control. Assign Owner, Contributor, or Reader roles. Principle of least privilege — give only what's needed.</div></div>
+          <div class="ccard"><div class="cl">Zero Trust + Defence-in-depth</div><div class="cv">Zero Trust = never trust, always verify. Defence-in-depth = 7 layers of security (physical → network → identity → data).</div></div>
+        </div>
+        <div class="box-info"><strong>Passwordless authentication</strong> uses biometrics (fingerprint, face) or security keys (FIDO2) instead of passwords. More secure because there's no password to steal or guess.</div>
+        <div class="box-tip"><strong>Microsoft Defender for Cloud</strong> monitors your Azure resources, gives a secure score, and alerts you to vulnerabilities across your environment.</div>`,
+      analogy:`<div class="al">Office building analogy</div>
+        <div class="ab"><strong>Entra ID</strong> = HR directory — knows who works there and their job title.<br><br><strong>Conditional Access</strong> = A smart reception policy: "If visitor from known company → lobby pass. If unrecognised person → full ID check + escort."<br><br><strong>External identities</strong> = Visitor passes — external partners can enter using their own company badge, not a fake one you issue them.<br><br><strong>Zero Trust</strong> = Every single door requires badge scan, even internal ones. No "I'm already inside so I'm trusted."</div>`,
+      quiz:{q:"An admin wants to enforce that users signing in from outside the corporate network must complete MFA. What should they configure?",opts:["An RBAC role assignment","A Conditional Access policy","Microsoft Entra Domain Services","A resource lock"],answer:1,fbc:"✅ Correct! Conditional Access policies define if/then rules — in this case: if sign-in is from an unknown location, then require MFA.",fbw:"❌ Not quite. Conditional Access policies are the answer — they apply conditions to access requests based on signals like location, device, and user risk."}
+    }
+  ]
+},
+{
+  id:2,icon:"⚙️",color:"#fef9c3",
+  title:"Management and governance",
+  meta:"4 lessons · 30–35% of exam",
+  lessons:[
+    {
+      id:"3-1",title:"Cost management in Azure",
+      learn:`<h3>Understanding and managing Azure costs</h3>
+        <p>The exam tests whether you understand what drives cost and which tools to use to manage it.</p>
+        ${IL["3-1"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Pricing Calculator</div><div class="cv">Estimate costs before you deploy. Configure your expected services and see a monthly estimate. Great for budgeting.</div></div>
+          <div class="ccard"><div class="cl">TCO Calculator</div><div class="cv">Total Cost of Ownership — compare running workloads on-premises vs Azure. Helps justify cloud migration to leadership.</div></div>
+          <div class="ccard"><div class="cl">Cost Management + Billing</div><div class="cv">Track actual spend in real-time. Set budgets and receive alerts (e.g. at 80% of budget). Analyse by resource, tag, or service.</div></div>
+          <div class="ccard"><div class="cl">Resource Tags</div><div class="cv">Key-value labels on resources (Department: IT, Project: Alpha). Filter cost reports by tag. Max 50 tags per resource.</div></div>
+        </div>
+        <div class="box-tip"><strong>Factors that affect Azure costs:</strong> resource type, consumption amount, region (some are more expensive than others), outbound bandwidth (data leaving Azure costs money), and subscription/licence type.</div>
+        <div class="box-exam"><strong>🎯 Exam tip:</strong> Know which tool is for estimation (Pricing Calculator, TCO Calculator) vs which is for tracking actual spend (Cost Management + Billing). These are frequently tested.</div>`,
+      analogy:`<div class="al">Analogy</div>
+        <div class="ab"><strong>Pricing Calculator</strong> = Getting a quote from a builder before starting work — estimate before committing.<br><br><strong>TCO Calculator</strong> = Comparing the cost of buying vs renting a flat, including all hidden costs like maintenance and insurance.<br><br><strong>Cost Management</strong> = Your banking app — real spending, real-time, with alerts when you're close to your monthly limit.<br><br><strong>Tags</strong> = Labelling every receipt by department so your accountant can run a report showing what each team spent.</div>`,
+      quiz:{q:"A finance team wants to estimate how much it would cost to migrate their on-premises SQL database to Azure before committing. Which tool should they use?",opts:["Cost Management + Billing","Azure Pricing Calculator","Azure Policy","TCO Calculator"],answer:3,fbc:"✅ Correct! The TCO Calculator compares the full cost of on-premises vs Azure, helping justify migration decisions to stakeholders.",fbw:"❌ Not quite. The TCO (Total Cost of Ownership) Calculator is designed for comparing on-premises vs cloud costs to build a business case for migration."}
+    },
+    {
+      id:"3-2",title:"Azure governance tools",
+      learn:`<h3>Keeping Azure organised and compliant</h3>
+        <p>Governance tools ensure resources are created, configured, and maintained according to your organisation's rules.</p>
+        ${IL["3-2"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Azure Policy</div><div class="cv">Define and enforce rules on resources. Can audit (report non-compliance), deny (block non-compliant creates), or remediate. Example: "All resources must have a cost-centre tag."</div></div>
+          <div class="ccard"><div class="cl">Resource locks</div><div class="cv">ReadOnly = nobody can change the resource. CanNotDelete = nobody can delete it — not even Owners. Must remove the lock first.</div></div>
+          <div class="ccard"><div class="cl">Microsoft Purview</div><div class="cv">Data governance and compliance across your whole organisation — Azure and beyond. Discover, classify, and protect sensitive data.</div></div>
+          <div class="ccard"><div class="cl">Management groups</div><div class="cv">Containers for organising multiple subscriptions. Apply Azure Policy and RBAC at scale across your whole organisation hierarchy.</div></div>
+        </div>
+        <div class="box-info"><strong>Resource hierarchy:</strong> Management Groups → Subscriptions → Resource Groups → Resources. Policies and RBAC applied higher up are inherited by everything below.</div>
+        <div class="box-exam"><strong>🎯 Remember:</strong> A CanNotDelete resource lock stops even an Owner from deleting the resource. It overrides RBAC. You must remove the lock before you can delete.</div>`,
+      analogy:`<div class="al">Analogy</div>
+        <div class="ab"><strong>Azure Policy</strong> = Company HR rules enforced automatically. "All expenses must have a receipt code." Finance system rejects submissions without one — no human needed to check.<br><br><strong>Resource locks</strong> = A physical padlock on a server cabinet with a "do not touch" sign. Even your boss can't open it without the key (removing the lock).<br><br><strong>Management groups</strong> = A corporate org chart. Rules set at the holding company level apply to all subsidiaries automatically.</div>`,
+      quiz:{q:"An administrator applies a CanNotDelete lock to a production virtual machine. An Owner-level user tries to delete the VM through the Azure portal. What happens?",opts:["The VM is deleted because Owner role overrides locks","The deletion is blocked until the lock is removed","The lock only applies to Contributor and Reader roles","The VM is moved to a recycle bin instead of deleted"],answer:1,fbc:"✅ Correct! Resource locks override RBAC roles — even an Owner cannot delete a resource with a CanNotDelete lock. The lock must be explicitly removed first.",fbw:"❌ Not quite. Resource locks override role assignments — a CanNotDelete lock blocks deletion for everyone, including Owners, until the lock is removed."}
+    },
+    {
+      id:"3-3",title:"Azure management and deployment tools",
+      learn:`<h3>How to manage and deploy Azure resources</h3>
+        <p>The January 2026 exam update refined this section. You need to know the key tools and when to use each one.</p>
+        ${IL["3-3"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Azure portal</div><div class="cv">Web-based GUI at portal.azure.com. No code needed. Best for beginners and one-off tasks. Visual and intuitive.</div></div>
+          <div class="ccard"><div class="cl">Azure Cloud Shell</div><div class="cv">Browser-based terminal built into the portal. Supports both Azure CLI and Azure PowerShell — no local install needed.</div></div>
+          <div class="ccard"><div class="cl">Azure CLI</div><div class="cv">Command-line interface. Cross-platform (Windows, macOS, Linux). Uses az [command] syntax. Good for scripting.</div></div>
+          <div class="ccard"><div class="cl">Azure PowerShell</div><div class="cv">PowerShell module for Azure. Uses Get-Az / New-Az / Remove-Az cmdlets. Familiar for Windows admins.</div></div>
+          <div class="ccard"><div class="cl">ARM Templates</div><div class="cv">Infrastructure as Code (IaC) using JSON. Define all your Azure resources in a file. Deploy the same environment consistently every time.</div></div>
+          <div class="ccard"><div class="cl">Azure Arc</div><div class="cv">Extend Azure management to resources outside Azure — on-premises servers, VMs in other clouds (AWS, GCP). Manage everything from one place.</div></div>
+        </div>
+        <div class="box-info"><strong>IaC (Infrastructure as Code)</strong> means defining your infrastructure in code files rather than clicking through the portal. Benefits: reproducible, version-controlled, consistent, auditable. ARM templates are Azure's native IaC format. Bicep and Terraform are also used.</div>
+        <div class="box-exam"><strong>🎯 Exam tip:</strong> Azure CLI and Azure PowerShell do the same things — both can manage all Azure resources. The difference is syntax and the user's background. Neither is "better" — exam questions focus on what each one is, not which to choose.</div>`,
+      analogy:`<div class="al">Analogy</div>
+        <div class="ab"><strong>Azure portal</strong> = A car's infotainment touchscreen — visual, easy to navigate, great for quick one-off actions.<br><br><strong>CLI/PowerShell</strong> = The keyboard shortcut power user — faster and scriptable once you know the commands.<br><br><strong>ARM Templates</strong> = IKEA instructions — the same steps, followed exactly, build the same result every single time. Great for deploying consistent environments.<br><br><strong>Azure Arc</strong> = A universal TV remote — one device to control all your TVs regardless of brand or location.</div>`,
+      quiz:{q:"A team wants to deploy the same Azure environment (VMs, networking, storage) to multiple regions in a repeatable and consistent way. What should they use?",opts:["Azure portal (manual click-through)","Azure Cloud Shell one-liners","ARM templates","Azure Advisor"],answer:2,fbc:"✅ Correct! ARM templates define infrastructure as code — deploy the same environment consistently to any region, any number of times.",fbw:"❌ Not quite. ARM templates (Infrastructure as Code) are ideal for repeatable, consistent deployments to multiple environments or regions."}
+    },
+    {
+      id:"3-4",title:"Azure monitoring tools",
+      learn:`<h3>Monitoring your Azure environment</h3>
+        <p>Azure has several monitoring tools — each with a distinct purpose. The exam tests whether you can match the right tool to the right scenario.</p>
+        ${IL["3-4"]}
+        <div class="cgrid">
+          <div class="ccard"><div class="cl">Azure Monitor</div><div class="cv">Central hub for all metrics and logs across Azure. Set custom alerts, create dashboards, query logs via Log Analytics, trace application performance with Application Insights.</div></div>
+          <div class="ccard"><div class="cl">Log Analytics</div><div class="cv">Query engine within Azure Monitor. Write KQL (Kusto Query Language) queries against your logs to investigate issues and create reports.</div></div>
+          <div class="ccard"><div class="cl">Application Insights</div><div class="cv">Application Performance Monitoring (APM) — part of Azure Monitor. Tracks response times, error rates, and user flows in live apps.</div></div>
+          <div class="ccard"><div class="cl">Azure Advisor</div><div class="cv">Personalised AI-powered recommendations across 5 pillars: Reliability, Security, Performance, Cost, and Operational Excellence.</div></div>
+          <div class="ccard"><div class="cl">Azure Service Health</div><div class="cv">Real-time status of Azure services in your specific regions. Alerts for outages, planned maintenance, and health advisories.</div></div>
+        </div>
+        <div class="box-exam"><strong>🎯 Key distinctions:</strong><br>
+        Azure Monitor = collects data from YOUR resources (your VMs, your apps).<br>
+        Azure Service Health = tells you about MICROSOFT's infrastructure issues (outages in Azure regions).<br>
+        Azure Advisor = proactive RECOMMENDATIONS to improve your setup (not alerts, not monitoring — advice).</div>
+        <div class="box-tip"><strong>Application Insights</strong> tracks your application from the inside — page load times, exceptions, user sessions, dependency calls. You instrument your code with an Application Insights SDK and it sends telemetry to Azure Monitor.</div>`,
+      analogy:`<div class="al">Analogy</div>
+        <div class="ab"><strong>Azure Monitor</strong> = The instrumentation panel in your car — RPM, temperature, fuel level, warning lights. All about YOUR vehicle.<br><br><strong>Azure Service Health</strong> = Traffic radio — tells you about motorway closures and roadworks on the road AHEAD of you (Azure's infrastructure).<br><br><strong>Azure Advisor</strong> = A mechanic who inspects your car and says "your tyre tread is low, and you could save fuel by inflating them more." Proactive improvement advice, not a warning light.</div>`,
+      quiz:{q:"A developer wants to know the response times and error rates of their live web application running on Azure. Which tool should they use?",opts:["Azure Service Health","Azure Advisor","Application Insights","Azure Policy"],answer:2,fbc:"✅ Correct! Application Insights (part of Azure Monitor) is specifically designed for application performance monitoring — tracking response times, exceptions, and user behaviour.",fbw:"❌ Not quite. Application Insights (within Azure Monitor) is the answer — it monitors your application's performance and behaviour from the inside."}
+    }
+  ]
+}
+];
+
+// ─── ASSESSMENT QUESTION BANK (200 questions) ─────────────────────────────────
+const QUESTIONS=[
+  {q:"What is the primary advantage of Microsoft Azure's global infrastructure?",opts:["Lower latency and compliance with data residency requirements","It is cheaper than all competitors","It requires less maintenance","No geographic limitations"],answer:0},
+  {q:"Which Azure service provides automatic scaling based on demand?",opts:["Azure App Service","Azure Virtual Machines","Azure Static Web Apps","All of the above"],answer:3},
+  {q:"What is the main purpose of Azure Advisor?",opts:["Monitor application performance","Provide cost, security, and operational recommendations","Track Azure service health","Manage user identities"],answer:1},
+  {q:"Which service is used to run containers in Azure?",opts:["Azure App Service","Azure Container Instances","Azure Kubernetes Service (AKS)","All of the above"],answer:3},
+  {q:"What does IaaS stand for?",opts:["Infrastructure as a Service","Internet as a Service","Integrated as a Service","Information as a Service"],answer:0},
+  {q:"Azure SQL Database differs from SQL Server because it is:",opts:["Managed by Microsoft with automatic backups and updates","Cheaper to purchase","Only available in Europe","Requires more administration"],answer:0},
+  {q:"Which Azure service is best for building serverless applications?",opts:["Azure Functions","Azure App Service","Azure Virtual Machines","Azure Container Instances"],answer:0},
+  {q:"What is a compute resource in Azure?",opts:["Virtual Machines, App Services, and Functions","Storage accounts and databases","Networks and security groups","Monitoring and logging services"],answer:0},
+  {q:"Which of the following is NOT a category of cloud services?",opts:["IaaS","PaaS","SaaS","CaaS"],answer:3},
+  {q:"Azure Resource Manager (ARM) is used for:",opts:["Deploying and managing resources","Running virtual machines","Storing data","Monitoring applications"],answer:0},
+  {q:"What is Azure DevOps primarily used for?",opts:["Planning, tracking, and releasing software","Running virtual machines","Managing network traffic","Storing unstructured data"],answer:0},
+  {q:"Which storage service in Azure is best for structured data?",opts:["Blob Storage","File Shares","Azure SQL Database","Table Storage"],answer:2},
+  {q:"What does RBAC stand for?",opts:["Role-Based Access Control","Resource-Based Access Control","Role-Based Azure Control","Remote-Based Access Control"],answer:0},
+  {q:"Azure Virtual Network (VNet) provides:",opts:["Network isolation and connectivity","Automatic backups","Application performance monitoring","Machine learning capabilities"],answer:0},
+  {q:"Which Azure service offers managed Kubernetes?",opts:["Azure Container Instances","Azure Kubernetes Service (AKS)","Azure App Service","Azure Functions"],answer:1},
+  {q:"What is the purpose of Azure Key Vault?",opts:["Store and manage secrets, keys, and certificates","Run containers","Monitor application performance","Create virtual networks"],answer:0},
+  {q:"Which service is used to transfer large amounts of data to Azure?",opts:["Azure Data Box","Azure Blob Storage","Azure Files","Azure Data Factory"],answer:0},
+  {q:"What is Azure Service Health used for?",opts:["Monitor your resources","Check status of Azure services and regions","Run VMs","Manage user accounts"],answer:1},
+  {q:"Which of the following is a benefit of cloud computing?",opts:["Capital expense reduction","Elasticity and scalability","Global reach","All of the above"],answer:3},
+  {q:"What is the difference between public and private clouds?",opts:["Public clouds are multi-tenant, private clouds are single-tenant","Private clouds are always cheaper","Public clouds require more maintenance","There is no difference"],answer:0},
+  {q:"Which Azure service is used for machine learning?",opts:["Azure Machine Learning","Azure Cognitive Services","Azure Databricks","All of the above"],answer:3},
+  {q:"Application Insights tracks:",opts:["Infrastructure health only","Application performance and user behavior","Network traffic only","Storage usage"],answer:1},
+  {q:"What is Azure Policy used for?",opts:["Enforce governance rules across resources","Manage user identities","Monitor application logs","Scale resources automatically"],answer:0},
+  {q:"Which pricing model allows you to pay only for what you use?",opts:["Consumption-based pricing","Subscription pricing","Licensing","Enterprise agreements"],answer:0},
+  {q:"Azure Marketplace is used for:",opts:["Purchasing third-party solutions and services","Storing databases","Managing virtual networks","Monitoring applications"],answer:0},
+  {q:"What is the primary benefit of PaaS?",opts:["Reduced operational overhead","Maximum control of infrastructure","Lowest cost","Fastest execution"],answer:0},
+  {q:"Which service allows you to run code without managing servers?",opts:["Azure Functions","Azure App Service","Azure Virtual Machines","Azure Container Instances"],answer:0},
+  {q:"Azure Cosmos DB is designed for:",opts:["Global, highly scalable NoSQL databases","Local relational databases","Unstructured data storage","Network management"],answer:0},
+  {q:"What does SaaS stand for?",opts:["Software as a Service","Storage as a Service","Security as a Service","Server as a Service"],answer:0},
+  {q:"Which Azure service provides DDoS protection?",opts:["Azure DDoS Protection","Azure Firewall","Azure Application Gateway","All of the above"],answer:3},
+  {q:"Azure Data Lake Storage is best for:",opts:["Big data analytics","Transactional databases","Unstructured documents","Running applications"],answer:0},
+  {q:"What is the purpose of Azure Monitor?",opts:["Collect and analyze telemetry data","Manage user accounts","Deploy applications","Design networks"],answer:0},
+  {q:"Which of the following is NOT a compute service?",opts:["Azure Functions","Azure App Service","Azure Blob Storage","Azure Virtual Machines"],answer:2},
+  {q:"Azure DevOps Pipelines are used for:",opts:["CI/CD automation","Managing databases","Monitoring performance","Scaling resources"],answer:0},
+  {q:"What is a major advantage of managed services?",opts:["Reduced operational burden","Lower cost than unmanaged","Complete control over updates","Faster performance"],answer:0},
+  {q:"Which Azure service is for event-driven processing?",opts:["Azure Event Grid","Azure Event Hubs","Azure Service Bus","All of the above"],answer:3},
+  {q:"Azure ExpressRoute provides:",opts:["Dedicated network connection to Azure","Internet-based connectivity","VPN tunnel","DNS resolution"],answer:0},
+  {q:"What is the benefit of Azure Hybrid Benefit?",opts:["Reduced licensing costs for hybrid deployments","Unlimited storage","Free virtual machines","Automatic updates"],answer:0},
+  {q:"Which storage type is best for logs and streaming data?",opts:["Blob Storage","File Shares","Table Storage","Queue Storage"],answer:0},
+  {q:"Azure Functions scale based on:",opts:["Demand and triggers","Manual configuration only","Fixed capacity","CPU only"],answer:0},
+  {q:"What is Multi-Factor Authentication (MFA) used for?",opts:["Enhanced security with additional verification","Faster access","Reducing costs","Managing networks"],answer:0},
+  {q:"Azure Backup is used for:",opts:["Data protection and recovery","Monitoring performance","Managing identities","Running applications"],answer:0},
+  {q:"Which service manages SSL/TLS certificates?",opts:["Azure Key Vault","Azure App Service","Azure Front Door","Azure CDN"],answer:0},
+  {q:"What is the purpose of resource groups in Azure?",opts:["Organize and manage related resources","Store data","Run applications","Monitor performance"],answer:0},
+  {q:"Azure Automation is used for:",opts:["Automating repetitive tasks and runbooks","Running virtual machines manually","Storing data","Managing networks"],answer:0},
+  {q:"Which Azure service provides API management?",opts:["Azure API Management","Azure App Service","Azure Functions","Azure Service Bus"],answer:0},
+  {q:"What is the main purpose of Azure Load Balancer?",opts:["Distribute traffic across resources","Store data","Manage identities","Monitor applications"],answer:0},
+  {q:"Azure Synapse Analytics combines:",opts:["Big data and data warehouse capabilities","Networking and security","Virtual machines and containers","All of the above"],answer:0},
+  {q:"What is a snapshot in Azure Storage?",opts:["Read-only copy of a blob at a point in time","Backup of entire resource group","Virtual machine image","Network configuration"],answer:0},
+  {q:"Which service manages database backups automatically?",opts:["Azure SQL Database","Azure Cosmos DB","Both A and B","Neither"],answer:2},
+  {q:"What is the purpose of Network Security Groups (NSGs)?",opts:["Filter inbound/outbound traffic","Manage user accounts","Store data","Monitor performance"],answer:0},
+  {q:"Azure Logic Apps are used for:",opts:["Automating workflows and integrations","Running virtual machines","Storing data","Managing networks"],answer:0},
+  {q:"Which service is best for relational data?",opts:["Azure SQL Database","Azure Cosmos DB","Azure Table Storage","Azure Blob Storage"],answer:0},
+  {q:"What is the primary purpose of Azure Service Bus?",opts:["Message queue and integration","Run applications","Store files","Monitor performance"],answer:0},
+  {q:"Azure Batch is used for:",opts:["Large-scale parallel computing","Running single applications","Web hosting","Monitoring logs"],answer:0},
+  {q:"Which authentication method is most secure?",opts:["Username and password with MFA","Username and password only","Shared key","Anonymous access"],answer:0},
+  {q:"What is a major benefit of reservations in Azure?",opts:["Significant cost savings","Automatic scaling","Better performance","More storage"],answer:0},
+  {q:"Azure Sentinel is used for:",opts:["Security information and event management (SIEM)","Managing virtual machines","Storing data","Running applications"],answer:0},
+  {q:"Which service provides threat protection for databases?",opts:["Advanced Threat Protection","Azure Firewall","Azure Defender","Azure Policy"],answer:2},
+  {q:"What is the purpose of Azure Content Delivery Network (CDN)?",opts:["Deliver content globally with low latency","Run applications","Manage identities","Monitor logs"],answer:0},
+  {q:"Azure Traffic Manager is used for:",opts:["Route traffic across global endpoints","Manage virtual networks","Store data","Monitor performance"],answer:0},
+  {q:"Which service manages DNS records?",opts:["Azure DNS","Azure App Service","Azure Front Door","Azure CDN"],answer:0},
+  {q:"What is Azure Site Recovery used for?",opts:["Business continuity and disaster recovery","Running virtual machines","Storing data","Managing networks"],answer:0},
+  {q:"Which storage redundancy option provides the highest availability?",opts:["Geo-redundant storage (GRS)","Locally redundant storage (LRS)","Zone-redundant storage (ZRS)","Read-access geo-redundant (RA-GRS)"],answer:0},
+  {q:"Azure App Configuration is used for:",opts:["Centrally manage application settings","Run applications","Store data","Monitor performance"],answer:0},
+  {q:"What is the primary benefit of containers?",opts:["Consistency across environments","Lower cost than VMs","Automatic scaling","Built-in security"],answer:0},
+  {q:"Which service provides managed Kafka?",opts:["Azure Event Hubs","Azure Service Bus","Azure Cosmos DB","Azure Stream Analytics"],answer:0},
+  {q:"What is the purpose of Service Endpoints?",opts:["Secure traffic to Azure services over Azure backbone","Route traffic globally","Manage identities","Monitor performance"],answer:0},
+  {q:"Azure IoT Hub is used for:",opts:["Connect and manage IoT devices at scale","Run virtual machines","Store static data","Monitor logs"],answer:0},
+  {q:"Which service provides vulnerability scanning?",opts:["Azure Security Center (Azure Defender)","Azure Policy","Azure Firewall","Network Security Groups"],answer:0},
+  {q:"What is a Virtual Network Peering?",opts:["Direct connection between two VNets","Internet connection","VPN tunnel","Physical network"],answer:0},
+  {q:"Azure Database for MySQL/PostgreSQL is:",opts:["Managed relational database service","NoSQL database","Data warehouse","Object storage"],answer:0},
+  {q:"Which service provides configuration management?",opts:["Azure Automation State Configuration","Azure DevOps","Azure Logic Apps","Azure Functions"],answer:0},
+  {q:"What is the primary use of Azure Application Gateway?",opts:["Web application firewall and load balancing","Store data","Manage identities","Monitor logs"],answer:0},
+  {q:"Azure Cost Management + Billing helps you:",opts:["Monitor and optimize costs","Run applications","Manage networks","Secure resources"],answer:0},
+  {q:"Which service provides managed Apache Spark?",opts:["Azure Databricks","Azure Synapse Analytics","Both A and B","Azure HDInsight"],answer:2},
+  {q:"What is the purpose of User Access Reviews?",opts:["Verify who has access to resources","Run applications","Store data","Monitor performance"],answer:0},
+  {q:"Azure Service Fabric is used for:",opts:["Building microservices and distributed applications","Running virtual machines","Storing data","Managing networks"],answer:0},
+  {q:"Which storage service is best for unstructured data?",opts:["Blob Storage","Azure SQL Database","File Shares","Table Storage"],answer:0},
+  {q:"Azure Cognitive Services includes:",opts:["Vision, Speech, Language, and Decision services","Compute resources","Networking services","All Azure services"],answer:0},
+  {q:"What is a Virtual Machine Scale Set?",opts:["Automatically scale VMs based on load","Single virtual machine","Network security group","Storage account"],answer:0},
+  {q:"Which service manages root CA certificates?",opts:["Azure Key Vault","Azure App Service","Azure Front Door","Azure CDN"],answer:0},
+  {q:"Azure Stream Analytics is used for:",opts:["Real-time data analysis from streaming sources","Batch processing","Static data storage","Relational databases"],answer:0},
+  {q:"What is the benefit of Availability Sets?",opts:["High availability within a datacenter","Global availability","Automatic backups","Cost reduction"],answer:0},
+  {q:"Azure Event Grid is best for:",opts:["Event-driven architecture and serverless workflows","Batch processing","SQL queries","Web hosting"],answer:0},
+  {q:"Which service provides managed open-source databases?",opts:["Azure Database for MySQL/PostgreSQL/MariaDB","Azure SQL Database","Azure Cosmos DB","Azure Synapse"],answer:0},
+  {q:"What is the primary purpose of Azure Blueprint?",opts:["Define repeatable governance structures and resource templates","Run virtual machines","Store data","Monitor logs"],answer:0},
+  {q:"Azure Virtual Desktop is used for:",opts:["Remote desktop virtualization for end-user computing","Running applications on local machines","Storing data","Managing networks"],answer:0},
+  {q:"Which service manages credentials and secrets securely?",opts:["Azure Key Vault","Azure App Service","Azure Active Directory","Azure Automation"],answer:0},
+  {q:"What is the main advantage of Reserved Instances?",opts:["Significant cost savings vs. pay-as-you-go","Automatic scaling","Better performance","More features"],answer:0},
+  {q:"Azure Stack is used for:",opts:["Extend Azure to on-premises environments","Replace on-premises infrastructure","Store data only","Monitor networks"],answer:0},
+  {q:"Which service provides centralized logging?",opts:["Azure Monitor Logs (Log Analytics)","Azure Application Insights","Azure Audit Logs","All of the above"],answer:3},
+  {q:"What is the primary benefit of managed identities?",opts:["Secure authentication without managing credentials","Lower costs","Faster performance","More storage"],answer:0},
+  {q:"Azure Files supports which protocols?",opts:["SMB and NFS","HTTP only","FTP","Proprietary protocols"],answer:0},
+  {q:"Which service provides secure remote administration?",opts:["Azure Bastion","Network Security Groups","Azure Firewall","Azure VPN Gateway"],answer:0},
+  {q:"What is the purpose of Diagnostic Settings in Azure Monitor?",opts:["Route platform logs and metrics to destinations","Run applications","Store data","Manage identities"],answer:0},
+  {q:"Azure Purview is used for:",opts:["Data governance and discovery","Running virtual machines","Storing data","Managing networks"],answer:0},
+  {q:"Which service provides compliance and audit tracking?",opts:["Azure Policy and Azure Audit Logs","Azure DevOps","Azure Logic Apps","Azure Functions"],answer:0},
+  {q:"What is the main use case for Azure Dedicated Hosts?",opts:["Physical server isolation for compliance","Cost reduction","Automatic scaling","Quick deployment"],answer:0},
+  {q:"Azure Health Data Services enables:",opts:["HIPAA and HL7 compliance for healthcare data","General-purpose storage","Web hosting","Networking"],answer:0},
+  {q:"Which service provides API versioning and management?",opts:["Azure API Management","Azure App Service","Azure Functions","Azure Service Bus"],answer:0},
+  {q:"What is the primary benefit of geo-redundancy?",opts:["Data durability across geographic regions","Lower latency","Automatic scaling","Reduced costs"],answer:0},
+  {q:"Azure Migrate is used for:",opts:["Assess and migrate on-premises workloads to Azure","Run applications","Store data","Manage networks"],answer:0},
+  {q:"Which authentication protocol is recommended for modern applications?",opts:["OAuth 2.0 and OpenID Connect","NTLM","Basic authentication","Kerberos"],answer:0},
+  {q:"Azure Image Builder is used for:",opts:["Automate VM image creation and distribution","Run virtual machines","Store data","Monitor logs"],answer:0},
+  {q:"What is the purpose of Alert Rules in Azure Monitor?",opts:["Notify on metric or log-based conditions","Store data","Manage identities","Run applications"],answer:0},
+  {q:"Which service manages and distributes updates?",opts:["Azure Update Management","Windows Update","Azure DevOps","Azure Automation"],answer:0},
+  {q:"Azure Lighthouse enables:",opts:["Multi-tenant management of Azure resources","Single-tenant access","Running VMs","Storing data"],answer:0},
+  {q:"What is the main advantage of Ultra Disks?",opts:["Extremely high IOPS and throughput","Lower cost","Automatic backups","Easier management"],answer:0},
+  {q:"Azure Arc allows you to:",opts:["Manage on-premises and cloud resources centrally","Replace cloud infrastructure","Store data only","Monitor networks"],answer:0},
+  {q:"Which service provides built-in DDoS protection for applications?",opts:["Azure DDoS Protection Standard","Azure Firewall","Network Security Groups","Azure Application Gateway"],answer:0},
+  {q:"What is a Subnet in Azure networking?",opts:["Logical subdivision of a VNet","Physical network segment","Security group","Load balancer"],answer:0},
+  {q:"Azure Spring Cloud is used for:",opts:["Deploy Spring Boot microservices with PaaS convenience","Run any application","Store data","Manage networks"],answer:0},
+  {q:"Which service provides container image repository?",opts:["Azure Container Registry","Docker Hub on Azure","Azure Blob Storage","Azure Files"],answer:0},
+  {q:"What is the primary benefit of Spot VMs?",opts:["Significant cost savings vs. regular VMs","Guaranteed availability","Better performance","More features"],answer:0},
+  {q:"Azure Logic Apps connectors enable:",opts:["Integration with hundreds of cloud services","Running VMs","Storing data","Monitoring logs"],answer:0},
+  {q:"Which service provides searchable index over documents?",opts:["Azure Cognitive Search","Azure Blob Storage","Azure SQL Database","Azure Tables"],answer:0},
+  {q:"What is the purpose of Network Watcher?",opts:["Monitor and diagnose network issues","Run applications","Store data","Manage identities"],answer:0},
+  {q:"Azure Data Studio is used for:",opts:["Manage SQL databases and data exploration","Web hosting","Running applications","Storing files"],answer:0},
+  {q:"Which service provides threat intelligence?",opts:["Azure Defender for Cloud","Azure Firewall","Azure Policy","Network Security Groups"],answer:0},
+  {q:"What is the main use of Application Insights Sampling?",opts:["Reduce telemetry volume and costs","Improve application performance","Store data","Manage identities"],answer:0},
+  {q:"Azure Front Door is used for:",opts:["Global load balancing and DDoS protection","Local routing","Data storage","Application hosting"],answer:0},
+  {q:"Which service manages SQL Server licenses flexibly?",opts:["Azure Hybrid Benefit","Azure Reserved Instances","Azure Spot Pricing","Azure Sizing"],answer:0},
+  {q:"What is the primary purpose of Azure Privileged Identity Management (PIM)?",opts:["Just-in-time access management","Run applications","Store data","Monitor logs"],answer:0},
+  {q:"Azure NetApp Files provides:",opts:["High-performance NFS/SMB file storage","Object storage","SQL databases","Web hosting"],answer:0},
+  {q:"Which service provides metric-based auto-scaling?",opts:["Virtual Machine Scale Sets with auto-scale rules","Manual scaling only","Fixed capacity","Load balancer"],answer:0},
+  {q:"What is the main benefit of Snapshots?",opts:["Quick recovery and cloning of disks","Lower cost","Automatic backups","Faster performance"],answer:0},
+  {q:"Azure Service Fabric Mesh is used for:",opts:["Container orchestration for microservices","Running virtual machines","Data storage","Network management"],answer:0},
+  {q:"Which service provides managed Apache Hadoop?",opts:["Azure HDInsight","Azure Databricks","Azure Synapse","Azure Data Lake"],answer:0},
+  {q:"What is the primary purpose of Azure Bot Service?",opts:["Build and deploy intelligent bots","Run virtual machines","Store data","Manage networks"],answer:0},
+  {q:"Azure Attestation enables:",opts:["Verify platform and guest attestation for secure computing","Run applications","Store data","Monitor logs"],answer:0},
+  {q:"Which service provides IoT edge computing?",opts:["Azure IoT Edge","Azure IoT Hub","Azure Stream Analytics","Azure Event Hubs"],answer:0},
+  {q:"What is the main advantage of Availability Zones?",opts:["High availability within a region across physically separate zones","Global availability","Cost reduction","More storage"],answer:0},
+  {q:"Azure Communication Services enables:",opts:["SMS, voice, and video communication in apps","Data storage","Network management","Virtual machines"],answer:0},
+  {q:"Which service provides workspace analytics?",opts:["Azure Monitor for VMs (VM Insights)","Application Insights","Azure Advisor","Log Analytics"],answer:0},
+  {q:"What is the primary use of Azure Quantum?",opts:["Quantum computing and problem-solving","Traditional computing","Data storage","Network management"],answer:0},
+  {q:"Azure Video Indexer is used for:",opts:["Extract insights from video and audio content","Store videos","Display videos","Stream videos"],answer:0},
+  {q:"Which service provides vulnerability assessment for SQL?",opts:["Advanced Threat Protection for Azure SQL Database","Azure Policy","Azure Firewall","Network Security Groups"],answer:0},
+  {q:"What is the main benefit of Azure Well-Architected Framework?",opts:["Design reliable, secure, efficient, and cost-optimized systems","Run applications","Store data","Monitor networks"],answer:0},
+  {q:"Azure Chaos Studio is used for:",opts:["Test resilience of applications through chaos engineering","Run applications","Store data","Manage identities"],answer:0},
+  {q:"Which service manages Azure resource deployments?",opts:["Azure Resource Manager (ARM)","Azure DevOps","Azure Automation","Azure Policy"],answer:0},
+  {q:"What is the primary purpose of Azure Immutable Storage?",opts:["Prevent modification or deletion for compliance","Improve performance","Reduce costs","Enable faster access"],answer:0},
+  {q:"Azure VMware Solution enables:",opts:["Run VMware on Azure infrastructure","Run Hyper-V only","Store data","Manage networks"],answer:0},
+  {q:"Which service provides access reviews and entitlement management?",opts:["Azure AD Identity Governance","Azure DevOps","Azure Logic Apps","Azure Functions"],answer:0},
+  {q:"What is the main advantage of Reserved Capacity for App Service?",opts:["Significant cost savings vs. consumption pricing","Automatic scaling","Better performance","More features"],answer:0},
+  {q:"Azure Bastion is primarily used for:",opts:["RDP/SSH access without exposing VMs to internet","Local VM access","Network routing","Load balancing"],answer:0},
+  {q:"Which service provides serverless analytics?",opts:["Azure Synapse Analytics (Serverless SQL pools)","Azure Databricks","Azure HDInsight","Azure Data Lake"],answer:0},
+  {q:"What is the primary purpose of Azure Advisor Security Score?",opts:["Assess and improve security posture","Run applications","Store data","Monitor logs"],answer:0},
+  {q:"Azure Event Hub Capture is used for:",opts:["Archive streaming data automatically","Run applications","Store files","Display data"],answer:0},
+  {q:"Which service provides conditional access policies?",opts:["Azure AD Conditional Access","Azure Policy","Azure Firewall","Network Security Groups"],answer:0},
+  {q:"What is the main benefit of Zone-Redundant Storage?",opts:["High availability across multiple zones in a region","Global availability","Cost reduction","More capacity"],answer:0},
+  {q:"Azure OpenAI Service enables:",opts:["Access to OpenAI models with enterprise security","Open-source AI only","Traditional ML only","Data storage"],answer:0}
+];
+
+// ─── RESOURCES BY MODULE ──────────────────────────────────────────────────────
+const RESOURCES={
+  "Azure Fundamentals":[
+    {title:"📚 Azure Documentation",url:"https://docs.microsoft.com/en-us/azure/"},
+    {title:"💰 Pricing Calculator",url:"https://azure.microsoft.com/en-us/pricing/calculator/"},
+    {title:"🆓 Free Account",url:"https://azure.microsoft.com/en-us/free/"}
+  ],
+  "Compute Services":[
+    {title:"🖥️ Virtual Machines Docs",url:"https://docs.microsoft.com/en-us/azure/virtual-machines/"},
+    {title:"🌐 App Service Docs",url:"https://docs.microsoft.com/en-us/azure/app-service/"},
+    {title:"⚡ Azure Functions Docs",url:"https://docs.microsoft.com/en-us/azure/azure-functions/"},
+    {title:"📦 Container Instances Docs",url:"https://docs.microsoft.com/en-us/azure/container-instances/"}
+  ],
+  "Storage Solutions":[
+    {title:"💾 Azure Storage Docs",url:"https://docs.microsoft.com/en-us/azure/storage/"},
+    {title:"🔷 Blob Storage Docs",url:"https://docs.microsoft.com/en-us/azure/storage/blobs/"},
+    {title:"🗄️ Azure SQL Database Docs",url:"https://docs.microsoft.com/en-us/azure/azure-sql/database/"},
+    {title:"🌍 Cosmos DB Docs",url:"https://docs.microsoft.com/en-us/azure/cosmos-db/"}
+  ],
+  "Networking & Security":[
+    {title:"🔗 Virtual Network Docs",url:"https://docs.microsoft.com/en-us/azure/virtual-network/"},
+    {title:"🔥 Azure Firewall Docs",url:"https://docs.microsoft.com/en-us/azure/firewall/"},
+    {title:"🛡️ Network Security Groups",url:"https://docs.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview"},
+    {title:"🔐 Azure Key Vault Docs",url:"https://docs.microsoft.com/en-us/azure/key-vault/"}
+  ],
+  "Management & Governance":[
+    {title:"📋 Azure Policy Docs",url:"https://docs.microsoft.com/en-us/azure/governance/policy/"},
+    {title:"🛠️ Resource Manager Docs",url:"https://docs.microsoft.com/en-us/azure/azure-resource-manager/"},
+    {title:"💵 Cost Management",url:"https://docs.microsoft.com/en-us/azure/cost-management-billing/"},
+    {title:"🎯 Azure Advisor",url:"https://docs.microsoft.com/en-us/azure/advisor/"}
+  ],
+  "Monitoring & Analytics":[
+    {title:"📊 Azure Monitor Docs",url:"https://docs.microsoft.com/en-us/azure/azure-monitor/"},
+    {title:"👁️ Application Insights Docs",url:"https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview"},
+    {title:"📝 Log Analytics Docs",url:"https://docs.microsoft.com/en-us/azure/azure-monitor/logs/log-analytics-tutorial"}
+  ]
+};
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+const S={done:new Set(),cor:0,att:0};
+let cmod=null,cidx=0;
+
+function stats(){
+  const tot=MODULES.reduce((a,m)=>a+m.lessons.length,0);
+  document.getElementById('pbar').style.width=(S.done.size/tot*100)+'%';
+  document.getElementById('plbl').textContent=S.done.size+' of '+tot+' lessons completed';
+  document.getElementById('s-cor').textContent=S.cor;
+  document.getElementById('s-att').textContent=S.att;
+  document.getElementById('s-les').textContent=S.done.size;
+  document.getElementById('s-pct').textContent=S.att>0?Math.round(S.cor/S.att*100)+'%':'0%';
+  renderMods();
+}
+
+function renderMods(){
+  const el=document.getElementById('modlist');el.innerHTML='';
+  MODULES.forEach(m=>{
+    const alldone=m.lessons.every(l=>S.done.has(l.id));
+    const cnt=m.lessons.filter(l=>S.done.has(l.id)).length;
+    const d=document.createElement('div');
+    d.className='mod-card'+(alldone?' done':'');
+    d.innerHTML=`<div class="mod-icon" style="background:${m.color}">${m.icon}</div>
+      <div class="mod-info"><div class="mod-title">${m.title}</div><div class="mod-meta">${m.meta} &nbsp;·&nbsp; ${cnt}/${m.lessons.length} done</div></div>
+      <div class="mod-badge ${alldone?'bdg-done':'bdg-todo'}">${alldone?'Complete ✓':'Study →'}</div>`;
+    d.onclick=()=>openMod(m);
+    el.appendChild(d);
+  });
+}
+
+function openMod(m){cmod=m;openLesson(0);}
+
+function openLesson(idx){
+  cidx=idx;
+  const L=cmod.lessons[idx];
+  document.getElementById('home').classList.add('hidden');
+  document.getElementById('lessonview').classList.remove('hidden');
+  const a=document.getElementById('larea');
+  const n=cmod.lessons.length;
+  const q=L.quiz;
+  const opts=q.opts.map((o,i)=>`<button class="qopt" onclick="ans(this,${i},${q.answer},'${encodeURIComponent(q.fbc)}','${encodeURIComponent(q.fbw)}')">${o}</button>`).join('');
+  a.innerHTML=`
+    <div class="lbc">${cmod.icon} ${cmod.title}</div>
+    <div class="lth">${L.title}</div>
+    <div class="lcard">
+      <div class="ltabs">
+        <button class="ltab on" onclick="tab(this,'tl${idx}')">Learn</button>
+        <button class="ltab" onclick="tab(this,'ta${idx}')">Analogy</button>
+        <button class="ltab" onclick="tab(this,'tq${idx}')">Quiz</button>
+      </div>
+      <div class="lpane on" id="tl${idx}">${L.learn}</div>
+      <div class="lpane" id="ta${idx}">${L.analogy}</div>
+      <div class="lpane" id="tq${idx}">
+        <div class="qtext">${q.q}</div>
+        <div class="qopts">${opts}</div>
+        <div class="qfb" id="qf${idx}"></div>
+        <div class="qnext" id="qn${idx}">
+          ${idx<n-1?`<button class="btn btn-p" onclick="openLesson(${idx+1})">Next lesson →</button>`:`<button class="btn btn-p" onclick="goHome()">Module complete ✓</button>`}
+          <button class="btn" onclick="retry(${idx})">Try again</button>
+        </div>
+      </div>
+    </div>
+    <div class="cbanner" id="cb${idx}"><p>🎉 Module complete!</p><small>All lessons in this module done.</small></div>
+    <div class="lfooter">
+      ${idx>0?`<button class="btn" onclick="openLesson(${idx-1})">← Previous</button>`:''}
+      ${idx<n-1?`<button class="btn" onclick="openLesson(${idx+1})">Next lesson →</button>`:''}
+      <span class="lctr">Lesson ${idx+1} of ${n}</span>
+    </div>`;
+}
+
+function tab(btn,id){
+  btn.closest('.lcard').querySelectorAll('.ltab').forEach(t=>t.classList.remove('on'));
+  btn.classList.add('on');
+  btn.closest('.lcard').querySelectorAll('.lpane').forEach(p=>p.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+
+function ans(btn,chosen,correct,fbc,fbw){
+  const opts=btn.closest('.qopts').querySelectorAll('.qopt');
+  opts.forEach(o=>o.disabled=true);
+  const ok=chosen===correct;
+  opts[correct].classList.add('correct');
+  if(!ok)btn.classList.add('wrong');
+  const fb=document.getElementById('qf'+cidx);
+  fb.className='qfb on '+(ok?'correct':'wrong');
+  fb.textContent=decodeURIComponent(ok?fbc:fbw);
+  document.getElementById('qn'+cidx).classList.add('on');
+  S.att++;if(ok)S.cor++;
+  S.done.add(cmod.lessons[cidx].id);
+  if(cmod.lessons.every(l=>S.done.has(l.id))){
+    const b=document.getElementById('cb'+cidx);if(b)b.classList.add('on');
+  }
+  stats();
+}
+
+function retry(idx){
+  document.querySelectorAll('.qopt').forEach(o=>{o.disabled=false;o.className='qopt';});
+  document.getElementById('qf'+idx).className='qfb';
+  document.getElementById('qn'+idx).classList.remove('on');
+}
+
+function goHome(){
+  document.getElementById('lessonview').classList.add('hidden');
+  document.getElementById('testview').classList.add('hidden');
+  document.getElementById('home').classList.remove('hidden');
+  document.getElementById('nav-home').classList.add('active');
+  document.getElementById('nav-test').classList.remove('active');
+  stats();
+}
+
+// ─── ASSESSMENT TEST FUNCTIONS ─────────────────────────────────────────────────
+let testState={questions:[],answers:new Array(),current:0,total:0};
+
+function switchView(view){
+  document.getElementById('home').classList.add('hidden');
+  document.getElementById('lessonview').classList.add('hidden');
+  document.getElementById('testview').classList.add('hidden');
+  document.getElementById('nav-home').classList.remove('active');
+  document.getElementById('nav-test').classList.remove('active');
+  
+  if(view==='home'){
+    document.getElementById('home').classList.remove('hidden');
+    document.getElementById('nav-home').classList.add('active');
+  } else if(view==='test'){
+    document.getElementById('testview').classList.remove('hidden');
+    document.getElementById('nav-test').classList.add('active');
+    renderTestSelector();
+  }
+}
+
+function renderTestSelector(){
+  const sel=document.getElementById('testselector');
+  sel.classList.remove('hidden');
+  document.getElementById('testprogress').classList.add('hidden');
+  document.getElementById('testresults').classList.add('hidden');
+  
+  // Render resources
+  const rl=document.getElementById('resourcelinks');
+  rl.innerHTML='';
+  for(const [mod,links] of Object.entries(RESOURCES)){
+    const box=document.createElement('div');
+    box.className='resources-list';
+    box.innerHTML=`<h4>${mod}</h4>`;
+    links.forEach(l=>{
+      const a=document.createElement('a');
+      a.className='resource-link';
+      a.href=l.url;
+      a.target='_blank';
+      a.textContent=l.title;
+      box.appendChild(a);
+    });
+    rl.appendChild(box);
+  }
+}
+
+function startTest(count){
+  testState.total=count;
+  testState.questions=[];
+  testState.answers=new Array(count).fill(null);
+  testState.current=0;
+  
+  // Random selection from QUESTIONS
+  const shuffled=[...QUESTIONS].sort(()=>Math.random()-.5);
+  testState.questions=shuffled.slice(0,count);
+  
+  document.getElementById('testselector').classList.add('hidden');
+  document.getElementById('testprogress').classList.remove('hidden');
+  document.getElementById('testresults').classList.add('hidden');
+  
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q=testState.questions[testState.current];
+  const selectedIdx=testState.answers[testState.current];
+  const opts=q.opts.map((o,i)=>`
+    <button class="test-opt ${selectedIdx===i?'selected':''}" onclick="selectAnswer(${i})">${o}</button>
+  `).join('');
+  
+  const tq=document.getElementById('testquestions');
+  tq.innerHTML=`
+    <div class="test-question">
+      <div class="test-q-number">Question ${testState.current+1}</div>
+      <div class="test-q-text">${q.q}</div>
+      <div class="test-options-group">${opts}</div>
+    </div>
+  `;
+  
+  document.getElementById('curq').textContent=testState.current+1;
+  document.getElementById('totalq').textContent=testState.total;
+  
+  // Update buttons
+  const prevbtn=document.getElementById('prevbtn');
+  const nextbtn=document.getElementById('nextbtn');
+  const submitbtn=document.getElementById('submititbtn');
+  
+  if(testState.current===0)prevbtn.style.display='none';
+  else prevbtn.style.display='inline-block';
+  
+  if(testState.current===testState.total-1){
+    nextbtn.style.display='none';
+    submitbtn.style.display='inline-block';
+  } else {
+    nextbtn.style.display='inline-block';
+    submitbtn.style.display='none';
+  }
+}
+
+function selectAnswer(idx){
+  testState.answers[testState.current]=idx;
+  renderQuestion();
+}
+
+function nextQ(){
+  if(testState.current<testState.total-1){
+    testState.current++;
+    renderQuestion();
+  }
+}
+
+function prevQ(){
+  if(testState.current>0){
+    testState.current--;
+    renderQuestion();
+  }
+}
+
+function submitTest(){
+  let cor=0;
+  testState.questions.forEach((q,i)=>{
+    if(testState.answers[i]===q.answer)cor++;
+  });
+  
+  const pct=Math.round(cor/testState.total*100);
+  // Probability score: loosely based on percentage
+  // 70%+ is strong, 50-70% is moderate, <50% is weak
+  let prob=Math.min(100,Math.round(pct*1.2));
+  let probDesc='';
+  if(prob>=80)probDesc='✅ <strong>Excellent!</strong> You appear well-prepared for the exam. Review any weak areas and take another practice test.';
+  else if(prob>=70)probDesc='✅ <strong>Good preparation!</strong> You have a solid foundation. Focus on the areas where you had incorrect answers.';
+  else if(prob>=60)probDesc='⚠️ <strong>Moderate readiness.</strong> You need more study time. Review the modules and retake this test.';
+  else if(prob>=50)probDesc='⚠️ <strong>Needs improvement.</strong> Study the core concepts more thoroughly before attempting the real exam.';
+  else probDesc='❌ <strong>Significant preparation needed.</strong> Go through all modules systematically and take more practice tests.';
+  
+  document.getElementById('finalcor').textContent=cor;
+  document.getElementById('finaltot').textContent=testState.total;
+  document.getElementById('finalpct').textContent=pct;
+  document.getElementById('correctans').textContent=cor;
+  document.getElementById('incorrectans').textContent=testState.total-cor;
+  document.getElementById('probscore').textContent=prob;
+  document.getElementById('probfill').style.width=prob+'%';
+  document.getElementById('probdesc').innerHTML=probDesc;
+  
+  document.getElementById('testprogress').classList.add('hidden');
+  document.getElementById('testresults').classList.remove('hidden');
+}
+
+function resetTest(){
+  renderTestSelector();
+}
+
+renderMods();stats();
+</script>
+</body>
+</html>
