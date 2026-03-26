@@ -181,6 +181,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
 .tag-warn{background:var(--wnl);color:var(--wn)}
 .tag-pur{background:var(--pul);color:var(--pu)}
 .tag-teal{background:var(--tel);color:var(--te)}
+/* Stats page */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem}
+.stat-card{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rlg);padding:1.25rem 1rem;text-align:center}
+.stat-card-num{font-size:28px;font-weight:600;color:var(--acc)}
+.stat-card-lbl{font-size:12px;color:var(--txt2);margin-top:4px}
+.stat-section{background:var(--bg);border:.5px solid var(--bdr);border-radius:var(--rlg);padding:1.25rem;margin-bottom:1rem}
+.stat-section-title{font-size:14px;font-weight:500;color:var(--txt);margin-bottom:1rem}
+.stat-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
+.stat-bar-label{width:130px;color:var(--txt2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.stat-bar-track{flex:1;height:10px;background:var(--bg2);border-radius:99px;overflow:hidden}
+.stat-bar-fill{height:100%;border-radius:99px;transition:width .4s}
+.stat-bar-val{width:36px;text-align:right;color:var(--txt2);flex-shrink:0}
+.history-table{width:100%;border-collapse:collapse;font-size:13px}
+.history-table th{background:var(--bg2);padding:8px 10px;text-align:left;font-weight:500;color:var(--txt2);border-bottom:.5px solid var(--bdr2);font-size:12px}
+.history-table td{padding:9px 10px;border-bottom:.5px solid var(--bdr);color:var(--txt)}
+.history-table tr:last-child td{border-bottom:none}
+.pass-badge{font-size:11px;padding:2px 8px;border-radius:99px;font-weight:500}
+.pass-yes{background:var(--okl);color:var(--ok)}
+.pass-no{background:var(--erl);color:var(--er)}
+.empty-state{text-align:center;padding:2rem;color:var(--txt2);font-size:14px}
 </style>
 </head>
 <body>
@@ -197,6 +217,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div class="nav-tabs">
     <button class="nav-tab active" id="nav-home" onclick="switchView('home')">📚 Learn</button>
     <button class="nav-tab" id="nav-test" onclick="switchView('test')">🧪 Assessment Test</button>
+    <button class="nav-tab" id="nav-stats" onclick="switchView('stats')">📊 My Stats</button>
   </div>
 
   <!-- HOME VIEW -->
@@ -316,6 +337,27 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-seri
   <div id="lessonview" class="hidden">
     <button class="back-btn" onclick="goHome()">&#8592; Back to course</button>
     <div id="larea"></div>
+  </div>
+
+  <!-- STATS VIEW -->
+  <div id="statsview" class="hidden">
+    <div style="margin-bottom:1.5rem">
+      <div style="font-size:22px;font-weight:500;color:var(--txt)">📊 Your Performance Stats</div>
+      <div style="font-size:14px;color:var(--txt2);margin-top:4px">All your activity is saved locally in your browser</div>
+    </div>
+    <div class="stats-grid" id="statsSummary"></div>
+    <div class="stat-section">
+      <div class="stat-section-title">🧠 Lesson Quiz Accuracy</div>
+      <div class="stat-bar-wrap" id="lessonAccuracyBar"></div>
+    </div>
+    <div class="stat-section">
+      <div class="stat-section-title">🧪 Assessment Test History</div>
+      <div id="testHistoryTable"></div>
+    </div>
+    <div style="margin-top:2rem;padding-top:1rem;border-top:.5px solid var(--bdr)">
+      <button class="btn" onclick="confirmReset()" style="color:var(--er);border-color:var(--er)">🗑️ Clear all saved data</button>
+      <span style="font-size:12px;color:var(--txt2);margin-left:12px">This cannot be undone</span>
+    </div>
   </div>
 </div>
 
@@ -1503,6 +1545,161 @@ function resetTest(){
 }
 
 renderMods();stats();
+
+// ─── LOCALSTORAGE PERSISTENCE ─────────────────────────────────────────────────
+const LS_KEY = 'az900_state_v1';
+const LS_HIST = 'az900_test_history_v1';
+
+function saveState(){
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      done: [...S.done],
+      cor: S.cor,
+      att: S.att
+    }));
+  } catch(e){}
+}
+
+function loadState(){
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if(!raw) return;
+    const d = JSON.parse(raw);
+    S.done = new Set(d.done || []);
+    S.cor = d.cor || 0;
+    S.att = d.att || 0;
+  } catch(e){}
+}
+
+function saveTestResult(result){
+  try {
+    const hist = getTestHistory();
+    hist.push(result);
+    localStorage.setItem(LS_HIST, JSON.stringify(hist));
+  } catch(e){}
+}
+
+function getTestHistory(){
+  try {
+    return JSON.parse(localStorage.getItem(LS_HIST) || '[]');
+  } catch(e){ return []; }
+}
+
+function confirmReset(){
+  if(confirm('Clear all saved progress and test history? This cannot be undone.')){
+    localStorage.removeItem(LS_KEY);
+    localStorage.removeItem(LS_HIST);
+    S.done = new Set(); S.cor = 0; S.att = 0;
+    stats();
+    renderStats();
+  }
+}
+
+// ─── STATS PAGE RENDER ────────────────────────────────────────────────────────
+function renderStats(){
+  const hist = getTestHistory();
+  const totalLessons = MODULES.reduce((a,m)=>a+m.lessons.length,0);
+  const bestTest = hist.length ? Math.max(...hist.map(h=>h.pct)) : null;
+  const avgTest = hist.length ? Math.round(hist.reduce((a,h)=>a+h.pct,0)/hist.length) : null;
+  const passes = hist.filter(h=>h.pct>=70).length;
+
+  // Summary cards
+  document.getElementById('statsSummary').innerHTML = `
+    <div class="stat-card"><div class="stat-card-num" style="color:var(--acc)">${S.done.size}/${totalLessons}</div><div class="stat-card-lbl">Lessons completed</div></div>
+    <div class="stat-card"><div class="stat-card-num" style="color:var(--ok)">${S.att > 0 ? Math.round(S.cor/S.att*100) : 0}%</div><div class="stat-card-lbl">Quiz accuracy</div></div>
+    <div class="stat-card"><div class="stat-card-num" style="color:var(--pu)">${hist.length}</div><div class="stat-card-lbl">Tests taken</div></div>
+    <div class="stat-card"><div class="stat-card-num" style="color:${bestTest>=70?'var(--ok)':'var(--wn)'}">${bestTest !== null ? bestTest+'%' : '—'}</div><div class="stat-card-lbl">Best test score</div></div>
+    <div class="stat-card"><div class="stat-card-num" style="color:var(--txt)">${avgTest !== null ? avgTest+'%' : '—'}</div><div class="stat-card-lbl">Avg test score</div></div>
+    <div class="stat-card"><div class="stat-card-num" style="color:var(--te)">${passes}</div><div class="stat-card-lbl">Tests passed (≥70%)</div></div>
+  `;
+
+  // Lesson accuracy bars per module
+  const barEl = document.getElementById('lessonAccuracyBar');
+  if(S.att === 0){
+    barEl.innerHTML = '<div class="empty-state">No quiz attempts yet — complete some lessons first! 📚</div>';
+  } else {
+    barEl.innerHTML = MODULES.map(m => {
+      const done = m.lessons.filter(l=>S.done.has(l.id)).length;
+      const pct = Math.round(done/m.lessons.length*100);
+      const color = pct===100?'var(--ok)':pct>=50?'var(--wn)':'var(--er)';
+      return `<div class="stat-bar-row">
+        <div class="stat-bar-label">${m.icon} ${m.title}</div>
+        <div class="stat-bar-track"><div class="stat-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+        <div class="stat-bar-val">${done}/${m.lessons.length}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Test history table
+  const tableEl = document.getElementById('testHistoryTable');
+  if(hist.length === 0){
+    tableEl.innerHTML = '<div class="empty-state">No tests taken yet — head to Assessment Test to start! 🧪</div>';
+  } else {
+    const rows = [...hist].reverse().map((h,i) => {
+      const pass = h.pct >= 70;
+      return `<tr>
+        <td>#${hist.length - i}</td>
+        <td>${h.date}</td>
+        <td>${h.count} Qs</td>
+        <td>${h.correct}/${h.count}</td>
+        <td><strong>${h.pct}%</strong></td>
+        <td><span class="pass-badge ${pass?'pass-yes':'pass-no'}">${pass?'Pass ✓':'Fail ✗'}</span></td>
+      </tr>`;
+    }).join('');
+    tableEl.innerHTML = `<table class="history-table">
+      <thead><tr><th>#</th><th>Date</th><th>Length</th><th>Score</th><th>%</th><th>Result</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  }
+}
+
+// ─── PATCH switchView TO INCLUDE STATS ───────────────────────────────────────
+const _origSwitchView = switchView;
+switchView = function(view){
+  document.getElementById('statsview').classList.add('hidden');
+  document.getElementById('nav-stats').classList.remove('active');
+  if(view === 'stats'){
+    document.getElementById('home').classList.add('hidden');
+    document.getElementById('lessonview').classList.add('hidden');
+    document.getElementById('testview').classList.add('hidden');
+    document.getElementById('nav-home').classList.remove('active');
+    document.getElementById('nav-test').classList.remove('active');
+    document.getElementById('statsview').classList.remove('hidden');
+    document.getElementById('nav-stats').classList.add('active');
+    renderStats();
+  } else {
+    _origSwitchView(view);
+  }
+};
+
+// ─── PATCH ans() TO SAVE STATE ────────────────────────────────────────────────
+const _origAns = ans;
+ans = function(btn, chosen, correct, fbc, fbw){
+  _origAns(btn, chosen, correct, fbc, fbw);
+  saveState();
+};
+
+// ─── PATCH submitTest() TO SAVE HISTORY ──────────────────────────────────────
+const _origSubmit = submitTest;
+submitTest = function(){
+  _origSubmit();
+  // Collect result after original ran
+  const cor = parseInt(document.getElementById('correctans').textContent);
+  const tot = testState.total;
+  const pct = Math.round(cor/tot*100);
+  const now = new Date();
+  saveTestResult({
+    date: now.toLocaleDateString('en-SE',{year:'numeric',month:'short',day:'numeric'})+' '+now.toLocaleTimeString('en-SE',{hour:'2-digit',minute:'2-digit'}),
+    count: tot,
+    correct: cor,
+    pct: pct
+  });
+};
+
+// ─── INIT: LOAD STATE ON PAGE LOAD ───────────────────────────────────────────
+loadState();
+renderMods();
+stats();
 </script>
 </body>
 </html>
